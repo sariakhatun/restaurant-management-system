@@ -59,7 +59,7 @@ const SingleFood = () => {
       </div>
 
       <div className="text-center mt-10">
-        <Link to="/foodPurchase" state={{foodName,imageUrl,price,userName,ownerEmail:userEmail, availableQuantity: quantity}}>
+        <Link to="/foodPurchase" state={{foodName,_id,imageUrl,price,userName,ownerEmail:userEmail, availableQuantity: quantity}}>
           <button className="btn bg-[#f74526] text-white hover:bg-[#e43c1c] px-10">
             Purchase
           </button>

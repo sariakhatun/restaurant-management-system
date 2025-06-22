@@ -16,7 +16,8 @@ const FoodPurchase = () => {
     price,
     userName,
     ownerEmail,
-    availableQuantity
+    availableQuantity,
+    _id,
   } = location.state;
 
   const [quantityError, setQuantityError] = useState("");
@@ -46,6 +47,11 @@ const FoodPurchase = () => {
       .post("http://localhost:3000/purchased", purchasedItem)
       .then((res) => {
         if (res.data) {
+            axios.patch(`http://localhost:3000/foods/purchased/${_id}`)
+            .then(()=>console.log('purchase count updated'))
+            .catch(err=>console.error('purchase count update failed',err))
+
+
           Swal.fire({
             position: "top-end",
             icon: "success",
