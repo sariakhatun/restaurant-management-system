@@ -38,7 +38,7 @@ const FoodList = ({myFoodsPromise}) => {
       </div>
 
       <div className="text-center mt-10">
-        <Link to="/foodPurchase" >
+        <Link to={`/updatePost/${food._id}`} >
           <button className="btn bg-[#f74526] text-white hover:bg-[#e43c1c] px-10">
             Update Post
           </button>

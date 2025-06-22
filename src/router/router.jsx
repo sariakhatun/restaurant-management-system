@@ -17,6 +17,7 @@ import Loading from '../Components/Loading';
 import SingleFood from '../pages/SingleFood';
 import FoodPurchase from '../pages/FoodPurchase';
 import Error from '../pages/Error';
+import UpdateFood from '../pages/UpdateFood';
 const router = createBrowserRouter([
   {
     path: "/",
@@ -83,6 +84,14 @@ const router = createBrowserRouter([
             element:<PrivateRoute>
                 <MyOrders></MyOrders>
             </PrivateRoute>
+  },
+  {
+            
+            path:'/updatePost/:id',
+            element:<PrivateRoute>
+                <UpdateFood></UpdateFood>
+            </PrivateRoute>,
+            loader:({params})=>fetch(`http://localhost:3000/foods/${params.id}`)
   },
     ]
   },

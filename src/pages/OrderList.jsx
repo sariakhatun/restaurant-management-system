@@ -1,5 +1,5 @@
 import axios from "axios";
-import moment from "moment";
+
 import React, { use, useState } from "react";
 import { MdDelete } from "react-icons/md";
 import { Await } from "react-router";
@@ -26,9 +26,10 @@ const OrderList = ({ myOrdersPromise }) => {
       if (result.isConfirmed) {
         
 
-       let response = await axios.delete(`http://localhost:3000/purchased/${_id}`)
-       console.log('delete successfully',response.data)
-       if(response.data.deletedCount){
+       await axios.delete(`http://localhost:3000/purchased/${_id}`)
+       .then(res=>{
+        console.log(res.data)
+        if(res.data.deletedCount){
          Swal.fire({
           title: "Deleted!",
           text: "Your Food Item has been deleted.",
@@ -38,6 +39,12 @@ const OrderList = ({ myOrdersPromise }) => {
         let remainingOrders = orders.filter(order=>order._id !== _id)
         setOrders(remainingOrders)
        }
+       })
+       .catch(error=>{
+        console.log(error)
+       })
+      
+       
        
       }
     });
