@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import useAuth from "../hooks/useAuth";
 import { ToastContainer } from "react-toastify";
 import Loading from "../Components/Loading";
@@ -8,26 +8,43 @@ import Swal from "sweetalert2";
 import { useLocation } from "react-router";
 
 const FoodPurchase = () => {
-  let { user } = useAuth();
-  console.log(user);
-  let location = useLocation()
-  let { imageUrl,foodName,price,userName} = location.state
+  const { user } = useAuth();
+  const location = useLocation();
+  const {
+    imageUrl,
+    foodName,
+    price,
+    userName,
+    ownerEmail,
+    availableQuantity
+  } = location.state;
 
-  let handlePurchase = (e) => {
+  const [quantityError, setQuantityError] = useState("");
+
+  if (!user) return <Loading />;
+
+  const isOwnFood = user.email === ownerEmail;
+  const isOutOfStock = availableQuantity == 0;
+
+  const handlePurchase = (e) => {
     e.preventDefault();
-    let form = e.target;
-    let formData = new FormData(form);
+    const form = e.target;
+    const quantity = parseInt(form.quantity.value);
 
-    let currentDate =moment().format('MMMM Do YYYY, h:mm:ss a');
+    if (quantity > availableQuantity) {
+      setQuantityError(`You can only purchase up to ${availableQuantity} items.`);
+      return;
+    }
+
+    const currentDate = moment().format("MMMM Do YYYY, h:mm:ss a");
+    const formData = new FormData(form);
     formData.append("buyingDate", currentDate);
-    let purchasedItem = Object.fromEntries(formData.entries());
 
-    console.log(purchasedItem);
+    const purchasedItem = Object.fromEntries(formData.entries());
 
     axios
       .post("http://localhost:3000/purchased", purchasedItem)
       .then((res) => {
-        console.log("after adding to db", res.data);
         if (res.data) {
           Swal.fire({
             position: "top-end",
@@ -36,24 +53,37 @@ const FoodPurchase = () => {
             showConfirmButton: false,
             timer: 1500,
           });
+          form.reset();
         }
       })
       .catch((error) => {
-        console.log(error);
+        console.error(error);
       });
-    form.reset();
   };
-  if (!user) {
-    return <Loading></Loading>;
-  }
 
   return (
     <div className="max-w-xl mx-auto mt-10 bg-white p-6 rounded-xl shadow-md">
       <h2 className="text-3xl font-bold text-center text-[#f74526] mb-6">
         Complete Your Purchase
       </h2>
+
+      {isOwnFood && (
+        <p className="text-red-500 font-semibold mb-4 text-center">
+          ❌ You cannot purchase your own food item.
+        </p>
+      )}
+
+      {isOutOfStock && (
+        <p className="text-red-500 font-semibold mb-4 text-center">
+          ❌ This item is currently out of stock.
+        </p>
+      )}
+
       <form onSubmit={handlePurchase} className="grid gap-6">
-        {/* Food Image */}
+        <input type="hidden" name="availableQuantity" value={availableQuantity} />
+        <input type="hidden" name="ownerEmail" value={ownerEmail} />
+
+        {/* Image URL */}
         <div>
           <label className="block mb-1 font-medium">Image URL</label>
           <input
@@ -64,17 +94,19 @@ const FoodPurchase = () => {
             className="input input-bordered w-full bg-gray-100"
           />
         </div>
-         {/* food owner */}
+
+        {/* Owner */}
         <div>
           <label className="block mb-1 font-medium">Food Owner</label>
           <input
-            type="name"
+            type="text"
             name="ownerName"
             value={userName}
             readOnly
             className="input input-bordered w-full"
           />
         </div>
+
         {/* Food Name */}
         <div>
           <label className="block mb-1 font-medium">Food Name</label>
@@ -101,28 +133,24 @@ const FoodPurchase = () => {
 
         {/* Quantity */}
         <div>
-          <label className="block mb-1 font-medium">Quantity</label>
+          <label className="block mb-1 font-medium">
+            Quantity (Available: {availableQuantity})
+          </label>
           <input
             type="number"
             name="quantity"
             required
+            min="1"
+            max={availableQuantity}
             className="input input-bordered w-full"
+            disabled={isOutOfStock || isOwnFood}
           />
-        </div>
-       
-
-        {/* date */}
-        <div>
-          <label className="block mb-1 font-medium">Buying Date and Time</label>
-          <input
-            type="text"
-            value={moment().format('MMMM Do YYYY, h:mm:ss a')}
-            readOnly
-            className="input input-bordered w-full bg-gray-100"
-          />
+          {quantityError && (
+            <p className="text-red-500 mt-1">{quantityError}</p>
+          )}
         </div>
 
-        {/* Buyer Name */}
+        {/* Buyer Info */}
         <div>
           <label className="block mb-1 font-medium">Buyer Name</label>
           <input
@@ -134,7 +162,6 @@ const FoodPurchase = () => {
           />
         </div>
 
-        {/* Buyer Email */}
         <div>
           <label className="block mb-1 font-medium">Buyer Email</label>
           <input
@@ -146,10 +173,22 @@ const FoodPurchase = () => {
           />
         </div>
 
+        <div>
+          <label className="block mb-1 font-medium">Buying Date</label>
+          <input
+            type="text"
+            value={moment().format("MMMM Do YYYY, h:mm:ss a")}
+            readOnly
+            className="input input-bordered w-full bg-gray-100"
+          />
+        </div>
+
+        {/* Submit */}
         <div className="text-center">
           <button
             type="submit"
             className="btn bg-[#f74526] hover:bg-[#e43c1c] text-white px-10"
+            disabled={isOutOfStock || isOwnFood}
           >
             Purchase
           </button>
