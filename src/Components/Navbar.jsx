@@ -26,7 +26,7 @@ const Navbar = () => {
     
     <div>
       <div className="navbar bg-base-100 shadow-sm w-11/12 mx-auto">
-        <div className="navbar-start">
+        <div className="navbar-start -ml-6 lg:-ml-0">
           <div className="dropdown">
             <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
               <svg
@@ -59,8 +59,11 @@ const Navbar = () => {
              
             </ul>
           </div>
-          <div>
-            <img src={logo} alt="" className="w-12 h-12"/>
+          <div className="flex  lg:gap-2 items-center -ml-4">
+            <img src={logo} alt="" className="w-10 h-10 lg:w-12 lg:h-12"/>
+            <div className="font-bold text-xl md:text-2xl lg:text-3xl ">
+                <p className='logo font-extrabold'>Taste<span className='text-[#f74526]'>Hub</span></p>
+              </div>
           </div>
         </div>
         <div className="navbar-center hidden lg:flex">
@@ -73,9 +76,9 @@ const Navbar = () => {
            </div>
           </ul>
         </div>
-      <div className="navbar-end flex gap-4">
+      <div className="navbar-end flex gap-4 ml-6">
         {user ? (
-          <div className="flex gap-1  lg:gap-3 items-center">
+          <div className="flex gap-1  lg:gap-3 items-center ml-6 lg:ml-0">
             <label className="flex cursor-pointer  lg:gap-2 ">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -110,12 +113,7 @@ const Navbar = () => {
                 <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
               </svg>
             </label>
-            {/* <img
-              src={`${user && user.photoURL}`}
-              alt=""
-              className="w-8 h-8 lg:w-12 lg:h-12 rounded-full "
-              title={user ? user.displayName : ""}
-            /> */}
+            
              <div className="dropdown">
             <div tabIndex={0} role="button" className=" ">
               <img
@@ -147,7 +145,7 @@ const Navbar = () => {
             </button>
           </div>
         ) : (
-          <div className="navbar-end flex gap-2 lg:gap-4">
+          <div className="navbar-end flex gap-1 lg:gap-4  ">
             <label className="flex cursor-pointer gap-2">
               <svg
                 xmlns="http://www.w3.org/2000/svg"

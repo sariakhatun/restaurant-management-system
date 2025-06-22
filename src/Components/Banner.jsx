@@ -4,7 +4,7 @@ import { Link } from "react-router";
 const Banner = () => {
   return (
     <div
-      className="hero min-h-screen relative rounded-4xl"
+      className="hero min-h-screen relative rounded-2xl mb-12"
       style={{
         backgroundImage: `url(${banner})`,
         backgroundSize: "cover",
@@ -12,7 +12,7 @@ const Banner = () => {
         backgroundPosition: "center",
       }}
     >
-      <div className="hero-overlay rounded-4xl"></div>
+      <div className="hero-overlay rounded-2xl"></div>
       <div className="hero-content text-neutral-content text-center absolute  lg:top-20 lg:right-1">
         <div className="max-w-md">
           <h1 className="mb-8 text-5xl font-bold">Welcome to TasteHub</h1>
