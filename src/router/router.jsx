@@ -15,7 +15,7 @@ import SingleFood from "../pages/SingleFood";
 import FoodPurchase from "../pages/FoodPurchase";
 import Error from "../pages/Error";
 import UpdateFood from "../pages/UpdateFood";
-import { getAuth } from "firebase/auth";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 const router = createBrowserRouter([
   {
@@ -30,14 +30,17 @@ const router = createBrowserRouter([
       {
         path: "/allFoods",
         element: <AllFoods></AllFoods>,
-        loader: () => fetch("https://b11a11-server-side-sariakhatun.vercel.app/foods"),
+        loader: () =>
+          fetch("https://b11a11-server-side-sariakhatun.vercel.app/foods"),
         hydrateFallbackElement: <Loading></Loading>,
       },
       {
         path: "/singleFood/:id",
         element: <SingleFood></SingleFood>,
         loader: ({ params }) =>
-          fetch(`https://b11a11-server-side-sariakhatun.vercel.app/foods/${params.id}`),
+          fetch(
+            `https://b11a11-server-side-sariakhatun.vercel.app/foods/${params.id}`
+          ),
         hydrateFallbackElement: <Loading></Loading>,
       },
       {
@@ -103,27 +106,35 @@ const router = createBrowserRouter([
           </PrivateRoute>
         ),
         loader: async ({ params }) => {
-          // 1) get the currently signed-in user
           const auth = getAuth();
-          const user = auth.currentUser;
+
+          // Wait until Firebase auth state is ready
+          const user = await new Promise((resolve) => {
+            const unsubscribe = onAuthStateChanged(auth, (user) => {
+              unsubscribe(); // clean up
+              resolve(user);
+            });
+          });
+
           if (!user) {
             throw new Response("Unauthorized", { status: 401 });
           }
 
-          // 2) fetch a fresh ID token
-          const token = await user.getIdToken(/* forceRefresh = */ false);
+          const token = await user.getIdToken();
 
-          // 3) call your API with the Bearer token header
-          const res = await fetch(`https://b11a11-server-side-sariakhatun.vercel.app/foods/${params.id}`, {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          });
+          const res = await fetch(
+            `https://b11a11-server-side-sariakhatun.vercel.app/foods/${params.id}`,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
 
           if (!res.ok) {
-            // forward 404 / 401 / etc up to your error boundary
             throw new Response(res.statusText, { status: res.status });
           }
+
           return res.json();
         },
         hydrateFallbackElement: <Loading />,
