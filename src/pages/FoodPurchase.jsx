@@ -45,12 +45,12 @@ const FoodPurchase = () => {
     const purchasedItem = Object.fromEntries(formData.entries());
 
     axios
-      .post("http://localhost:3000/purchased", purchasedItem)
+      .post("https://b11a11-server-side-sariakhatun.vercel.app/purchased", purchasedItem)
       .then(async(res) => {
         if (res.data) {
                   const token = await auth.currentUser.getIdToken();
 
-            axios.patch(`http://localhost:3000/foods/purchased/${_id}`,{},{
+            axios.patch(`https://b11a11-server-side-sariakhatun.vercel.app/foods/purchased/${_id}`,{},{
                 headers:{
                     Authorization: `Bearer ${token}`
                 }

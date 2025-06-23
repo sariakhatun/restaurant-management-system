@@ -19,7 +19,7 @@ const AddFood = () => {
     let token = await getAuth().currentUser.getIdToken()
     console.log(foodItem)
 
-    axios.post('http://localhost:3000/foods',foodItem,{
+    axios.post('https://b11a11-server-side-sariakhatun.vercel.app/foods',foodItem,{
         headers:{
             Authorization:`Bearer ${token}`
         }

@@ -9,7 +9,7 @@ const AllFoods = () => {
   let [search,setSearch]=useState('')
   console.log(search)
   useEffect(()=>{
-    fetch(`http://localhost:3000/foods?searchParams=${search}`)
+    fetch(`https://b11a11-server-side-sariakhatun.vercel.app/foods?searchParams=${search}`)
     .then(res=>res.json())
     .then(data=>{
        setFoods(data)
