@@ -10,7 +10,7 @@ const MyFood = () => {
     return (
         <div>
             <Suspense fallback={<Loading></Loading>}>
-                <FoodList myFoodsPromise={myFoodsPromise(user.email)}></FoodList>
+                <FoodList myFoodsPromise={myFoodsPromise(user.email,user.accessToken)}></FoodList>
             </Suspense>
         </div>
     );

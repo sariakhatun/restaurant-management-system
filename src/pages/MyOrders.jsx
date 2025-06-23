@@ -12,7 +12,7 @@ const MyOrders = () => {
     return (
         <div>
            <Suspense fallback={<Loading></Loading>}>
-            <OrderList myOrdersPromise={myOrdersPromise(user.email)}></OrderList>
+            <OrderList myOrdersPromise={myOrdersPromise(user.email,user.accessToken)}></OrderList>
            </Suspense>
         </div>
     );

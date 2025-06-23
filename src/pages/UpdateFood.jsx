@@ -20,7 +20,7 @@ const UpdateFood = () => {
 
         //send updated food to the db
 
-        axios.put(`https://b11a11-server-side-sariakhatun.vercel.app/foods/${_id}`,updatedFood)
+        axios.put(`http://localhost:3000/foods/${_id}`,updatedFood)
         .then(res=>{
             console.log(res.data)
             if(res.data.modifiedCount){

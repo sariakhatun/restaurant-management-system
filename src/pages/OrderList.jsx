@@ -26,7 +26,7 @@ const OrderList = ({ myOrdersPromise }) => {
       if (result.isConfirmed) {
         
 
-       await axios.delete(`https://b11a11-server-side-sariakhatun.vercel.app/purchased/${_id}`)
+       await axios.delete(`http://localhost:3000/purchased/${_id}`)
        .then(res=>{
         console.log(res.data)
         if(res.data.deletedCount){
