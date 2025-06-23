@@ -5,9 +5,9 @@ const AllFoods = () => {
   let initialFoods = useLoaderData();
   let [foods, setFoods] = useState(initialFoods);
 
-  console.log(foods);
+ // console.log(foods);
   let [search,setSearch]=useState('')
-  console.log(search)
+ // console.log(search)
   useEffect(()=>{
     fetch(`https://b11a11-server-side-sariakhatun.vercel.app/foods?searchParams=${search}`)
     .then(res=>res.json())

@@ -8,7 +8,7 @@ import Swal from "sweetalert2";
 const OrderList = ({ myOrdersPromise }) => {
   let initialOrders = use(myOrdersPromise);
   let [orders,setOrders]=useState(initialOrders)
-  console.log(orders);
+ // console.log(orders);
 
 
   let handleDelete = async (_id) => {
@@ -28,7 +28,7 @@ const OrderList = ({ myOrdersPromise }) => {
 
        await axios.delete(`https://b11a11-server-side-sariakhatun.vercel.app/purchased/${_id}`)
        .then(res=>{
-        console.log(res.data)
+        //console.log(res.data)
         if(res.data.deletedCount){
          Swal.fire({
           title: "Deleted!",
@@ -41,7 +41,7 @@ const OrderList = ({ myOrdersPromise }) => {
        }
        })
        .catch(error=>{
-        console.log(error)
+       // console.log(error)
        })
       
        

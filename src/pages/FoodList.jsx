@@ -3,7 +3,7 @@ import { Link } from 'react-router';
 
 const FoodList = ({myFoodsPromise}) => {
     let foods = use(myFoodsPromise)
-    console.log(foods)
+   // console.log(foods)
     return (
         <div>
              <h1 className="text-3xl ">Add food so far : {foods.length} </h1>

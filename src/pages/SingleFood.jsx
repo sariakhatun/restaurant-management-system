@@ -5,7 +5,7 @@ const SingleFood = () => {
   let { id } = useParams();
   let food = useLoaderData();
 
-  console.log(food, id);
+ // console.log(food, id);
 
   const {
     _id,

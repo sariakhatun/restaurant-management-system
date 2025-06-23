@@ -16,13 +16,13 @@ const UpdateFood = () => {
         let form=e.target;
         let formData = new FormData(form)
         let updatedFood = Object.fromEntries(formData.entries())
-        console.log(updatedFood)
+       // console.log(updatedFood)
 
         //send updated food to the db
 
         axios.put(`https://b11a11-server-side-sariakhatun.vercel.app/foods/${_id}`,updatedFood)
         .then(res=>{
-            console.log(res.data)
+           // console.log(res.data)
             if(res.data.modifiedCount){
                  Swal.fire({
                   position: "top-end",
@@ -34,7 +34,7 @@ const UpdateFood = () => {
             }
         })
         .catch(error=>{
-            console.log(error)
+            //console.log(error)
         })
     }
 

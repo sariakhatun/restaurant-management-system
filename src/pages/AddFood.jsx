@@ -9,7 +9,7 @@ import { getAuth } from 'firebase/auth';
 
 const AddFood = () => {
   const { user } = useAuth();
-    console.log(user)
+    //console.log(user)
   const handleSubmit = async e => {
      e.preventDefault();
     let form = e.target;
@@ -17,7 +17,7 @@ const AddFood = () => {
     let foodItem = Object.fromEntries(formData.entries());
     
     let token = await getAuth().currentUser.getIdToken()
-    console.log(foodItem)
+   // console.log(foodItem)
 
     axios.post('https://b11a11-server-side-sariakhatun.vercel.app/foods',foodItem,{
         headers:{
@@ -37,7 +37,7 @@ const AddFood = () => {
         }
     })
     .catch(error=>{
-        console.log(error)
+       // console.log(error)
     })
      form.reset();
    

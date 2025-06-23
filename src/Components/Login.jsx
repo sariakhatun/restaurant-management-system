@@ -22,7 +22,7 @@ const Login = () => {
         loginUser(email,password)
         .then(res=>{
            // alert('signed in successfully')
-           console.log(res.user)
+          // console.log(res.user)
            toast.success('Logged in successfully')
            setTimeout(()=>{
              navigate(`${location.state ? location.state :'/'}`)
@@ -48,7 +48,7 @@ const Login = () => {
            },1500)
         })
         .catch(error=>{
-            console.log(error)
+           // console.log(error)
             toast.error(`Failed to sign in',${error.code}`)
         })
     }
