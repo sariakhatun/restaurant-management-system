@@ -1,8 +1,8 @@
 import React from "react";
-import { Link, useLoaderData, useParams } from "react-router";
+import { Link, useLoaderData } from "react-router";
 
 const SingleFood = () => {
-  let { id } = useParams();
+ // let { id } = useParams();
   let food = useLoaderData();
 
  // console.log(food, id);

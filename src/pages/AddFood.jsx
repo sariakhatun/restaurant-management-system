@@ -1,6 +1,6 @@
-import React, { use, useContext, useState } from 'react';
+import React from 'react';
 import { AuthContext } from '../Components/AuthContext';
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import useAuth from '../hooks/useAuth';
 import axios from 'axios';
