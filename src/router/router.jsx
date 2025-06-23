@@ -84,56 +84,50 @@ const router = createBrowserRouter([
           </PrivateRoute>
         ),
       },
-    //   {
-    //     path: "/updatePost/:id",
-    //     element: (
-    //       <PrivateRoute>
-    //         <UpdateFood></UpdateFood>
-    //       </PrivateRoute>
-    //     ),
-    //      loader:({params})=>fetch(`http://localhost:3000/foods/${params.id}`)
-        
-       
-    //   },
+      //   {
+      //     path: "/updatePost/:id",
+      //     element: (
+      //       <PrivateRoute>
+      //         <UpdateFood></UpdateFood>
+      //       </PrivateRoute>
+      //     ),
+      //      loader:({params})=>fetch(`http://localhost:3000/foods/${params.id}`)
 
-   
-{
-  path: "/updatePost/:id",
-  element: (
-    <PrivateRoute>
-      <UpdateFood />
-    </PrivateRoute>
-  ),
-  loader: async ({ params }) => {
-    // 1) get the currently signed-in user
-    const auth = getAuth();
-    const user = auth.currentUser;
-    if (!user) {
-      throw new Response("Unauthorized", { status: 401 });
-    }
+      //   },
 
-    // 2) fetch a fresh ID token
-    const token = await user.getIdToken(/* forceRefresh = */ false);
-
-    // 3) call your API with the Bearer token header
-    const res = await fetch(
-      `http://localhost:3000/foods/${params.id}`,
       {
-        headers: {
-          Authorization: `Bearer ${token}`,
+        path: "/updatePost/:id",
+        element: (
+          <PrivateRoute>
+            <UpdateFood />
+          </PrivateRoute>
+        ),
+        loader: async ({ params }) => {
+          // 1) get the currently signed-in user
+          const auth = getAuth();
+          const user = auth.currentUser;
+          if (!user) {
+            throw new Response("Unauthorized", { status: 401 });
+          }
+
+          // 2) fetch a fresh ID token
+          const token = await user.getIdToken(/* forceRefresh = */ false);
+
+          // 3) call your API with the Bearer token header
+          const res = await fetch(`http://localhost:3000/foods/${params.id}`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+
+          if (!res.ok) {
+            // forward 404 / 401 / etc up to your error boundary
+            throw new Response(res.statusText, { status: res.status });
+          }
+          return res.json();
         },
-      }
-    );
-
-    if (!res.ok) {
-      // forward 404 / 401 / etc up to your error boundary
-      throw new Response(res.statusText, { status: res.status });
-    }
-    return res.json();
-  },
-  hydrateFallbackElement: <Loading />
-},
-
+        hydrateFallbackElement: <Loading />,
+      },
     ],
   },
   {

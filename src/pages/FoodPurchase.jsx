@@ -6,6 +6,7 @@ import moment from "moment";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { useLocation } from "react-router";
+import { auth } from "../Firebase/Firebase.init";
 
 const FoodPurchase = () => {
   const { user } = useAuth();
@@ -27,7 +28,7 @@ const FoodPurchase = () => {
   const isOwnFood = user.email === ownerEmail;
   const isOutOfStock = availableQuantity == 0;
 
-  const handlePurchase = (e) => {
+  const handlePurchase = async (e) => {
     e.preventDefault();
     const form = e.target;
     const quantity = parseInt(form.quantity.value);
@@ -45,9 +46,15 @@ const FoodPurchase = () => {
 
     axios
       .post("http://localhost:3000/purchased", purchasedItem)
-      .then((res) => {
+      .then(async(res) => {
         if (res.data) {
-            axios.patch(`http://localhost:3000/foods/purchased/${_id}`)
+                  const token = await auth.currentUser.getIdToken();
+
+            axios.patch(`http://localhost:3000/foods/purchased/${_id}`,{},{
+                headers:{
+                    Authorization: `Bearer ${token}`
+                }
+            })
             .then(()=>console.log('purchase count updated'))
             .catch(err=>console.error('purchase count update failed',err))
 

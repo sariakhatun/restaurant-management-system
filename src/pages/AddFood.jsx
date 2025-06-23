@@ -5,37 +5,25 @@ import 'react-toastify/dist/ReactToastify.css';
 import useAuth from '../hooks/useAuth';
 import axios from 'axios';
 import Swal from 'sweetalert2';
+import { getAuth } from 'firebase/auth';
 
 const AddFood = () => {
   const { user } = useAuth();
     console.log(user)
-//   const [formData, setFormData] = useState({
-//     foodName: '',
-//     imageUrl: '',
-//     category: '',
-//     quantity: '',
-//     price: '',
-//     origin: '',
-//     description: '',
-//   });
-
-//   const handleChange = e => {
-//     const { name, value } = e.target;
-//     setFormData(prev => ({
-//       ...prev,
-//       [name]: value,
-//     }));
-//   };
-
   const handleSubmit = async e => {
      e.preventDefault();
     let form = e.target;
     let formData = new FormData(form);
     let foodItem = Object.fromEntries(formData.entries());
     
+    let token = await getAuth().currentUser.getIdToken()
     console.log(foodItem)
 
-    axios.post('http://localhost:3000/foods',foodItem)
+    axios.post('http://localhost:3000/foods',foodItem,{
+        headers:{
+            Authorization:`Bearer ${token}`
+        }
+    })
     .then(res=>{
         console.log('after adding to db',res.data)
          if (res.data.insertedId) {
