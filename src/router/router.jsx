@@ -32,14 +32,14 @@ const router = createBrowserRouter([
           
             path:'/allFoods',
             element:<AllFoods></AllFoods>,
-            loader:()=>fetch('http://localhost:3000/foods'),
+            loader:()=>fetch('https://b11a11-server-side-sariakhatun.vercel.app/foods'),
             hydrateFallbackElement:<Loading></Loading>
         },
         {
           
             path:'/singleFood/:id',
             element:<SingleFood></SingleFood>,
-            loader:({params})=>fetch(`http://localhost:3000/foods/${params.id}`),
+            loader:({params})=>fetch(`https://b11a11-server-side-sariakhatun.vercel.app/foods/${params.id}`),
             hydrateFallbackElement:<Loading></Loading>
         },
         {
@@ -91,7 +91,7 @@ const router = createBrowserRouter([
             element:<PrivateRoute>
                 <UpdateFood></UpdateFood>
             </PrivateRoute>,
-            loader:({params})=>fetch(`http://localhost:3000/foods/${params.id}`)
+            loader:({params})=>fetch(`https://b11a11-server-side-sariakhatun.vercel.app/foods/${params.id}`)
   },
     ]
   },

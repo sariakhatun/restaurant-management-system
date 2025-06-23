@@ -35,7 +35,7 @@ const AddFood = () => {
     
     console.log(foodItem)
 
-    axios.post('http://localhost:3000/foods',foodItem)
+    axios.post('https://b11a11-server-side-sariakhatun.vercel.app/foods',foodItem)
     .then(res=>{
         console.log('after adding to db',res.data)
          if (res.data.insertedId) {

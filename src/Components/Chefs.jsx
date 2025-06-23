@@ -4,7 +4,7 @@ import lina from '../assets/lina.jpg'
 import jamal from '../assets/jamal.jpg'
 const Chefs = () => {
     return (
-        <div className='mb-8'>
+        <div className='my-8'>
             <section className="py-16 bg-gradient-to-r from-[#fff0ea] to-[#ffe5df] rounded-4xl">
   <h2 className="text-4xl font-bold text-center mb-10 great-vibes text-[#f74526]">
     Meet Our Master Chefs

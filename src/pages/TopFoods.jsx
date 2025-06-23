@@ -6,7 +6,7 @@ const TopFoods = () => {
   const [topFoods, setTopFoods] = useState([]);
 
   useEffect(() => {
-    axios.get("http://localhost:3000/topFoods")
+    axios.get("https://b11a11-server-side-sariakhatun.vercel.app/topFoods")
       .then(res => setTopFoods(res.data))
       .catch(err => console.error("Failed to fetch top foods", err));
   }, []);

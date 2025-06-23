@@ -1,4 +1,4 @@
-export let myOrdersPromise = email=>{
-    return fetch(`http://localhost:3000/purchased?email=${email}`)
+export let myOrdersPromise = (email)=>{
+    return fetch(`https://b11a11-server-side-sariakhatun.vercel.app/purchased?email=${email}`)
     .then(res=>res.json())
 }
