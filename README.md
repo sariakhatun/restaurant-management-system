@@ -21,6 +21,12 @@ A full-stack Restaurant Management system built with the **MERN Stack (MongoDB, 
 
 ---
 
+## Project Overview
+
+This dynamic Restaurant Management Website is designed to streamline the entire dining experience by integrating advanced technologies for both customers and restaurant owners. Customers enjoy a seamless and engaging interface to explore diverse menu options, place orders effortlessly, and benefit from real-time updates. Restaurant owners gain comprehensive control over menu management, order tracking, and inventory, enabling efficient operations and improved customer satisfaction. The platform ensures robust security and privacy through Firebase Authentication and JWT-based authorization, delivering a trustworthy and reliable service for all users.
+
+
+
 ## Technologies Used
 
 ### Frontend:
@@ -182,7 +188,6 @@ dotenv
    npm run dev
    ```
 
-   *(Assuming you use nodemon with `dev` script)*
 
 4. **Open the client URL:**
    Visit [http://localhost:3000](http://localhost:3000) to use the app locally.
