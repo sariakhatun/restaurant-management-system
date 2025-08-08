@@ -197,4 +197,3 @@ dotenv
 
 ---
 
-If you want, I can also help generate a matching **screenshot image** or a more visually styled Markdown file! Would you like that?
