@@ -1,98 +1,200 @@
+
 # 🍽️ Restaurant Management Website
 
-A full-stack Restaurant Management system built with the **MERN Stack (MongoDB, Express.js, React.js, Node.js)**, featuring Firebase Authentication and JWT-based private route protection. This application allows users to explore, order, and manage food items, while restaurant owners can add, update, and track their offerings.
+## Description
+
+A full-stack Restaurant Management system built with the **MERN Stack (MongoDB, Express.js, React.js, Node.js)**, enhanced with Firebase Authentication and JWT-based private route protection. It offers customers a smooth experience exploring and ordering food, while restaurant owners can manage their menu items efficiently.
 
 ---
 
-## 🌐 Live URL
-**Client Live Site:** https://b11a11-sariakhatun.web.app
+## Live Project Links
 
-**Server Live URL:** https://b11a11-server-side-sariakhatun.vercel.app/
-
----
-
-## 🎯 Purpose
-The purpose of this project is to create a fully responsive, visually appealing, and functionally complete restaurant management platform that improves both the customer experience and the restaurant's internal management using modern web technologies.
+* **Client:** : https://b11a11-sariakhatun.web.app
+* **Server:** : https://b11a11-server-side-sariakhatun.vercel.app
 
 ---
 
-## 🚀 Key Features
+## Screenshot
 
-### ✅ Public Features
-- **Homepage:** Banner, top-selling foods, and attractive additional sections.
-- **All Foods Page:** View all food items with search functionality.
-- **Single Food Page:** Detailed info about a food item with purchase button.
-- **Gallery Page:** 10+ lightbox-enabled static images.
-
-### 🔐 Authenticated Features
-- **Authentication System:** Firebase-based login/register using email/password or Google.
-- **JWT Authorization:** Token-based protection for all private routes.
-- **Add Food:** Restaurant owners can add food items.
-- **My Foods:** Users can see, update their added food items.
-- **Food Purchase Page:** Buyers can securely purchase foods.
-- **My Orders:** Displays user's orders with delete and purchase info.
-
-### 💡 Special Functionalities
-- Quantity restriction on purchases (no over-buying or self-buy).
-- Real-time search feature for food by name.
-- Protected routes using JWT.
-- Responsive design across mobile, tablet, and desktop.
-- Theme toggle (light/dark).
-- Profile image dropdown with navigation links.
-- Spinner for loading states.
-- Framer Motion animations.
-- Secure storage of Firebase & MongoDB credentials using `.env`.
+![Restaurant Management Website Screenshot](./path-to-screenshot.png)
+*(Replace the path with the actual screenshot path in your repo)*
 
 ---
 
-## 🛠️ Tech Stack
+## Technologies Used
 
-### Client
-- React.js
-- React Router 
-- Firebase Authentication
-- Axios
-- SweetAlert2 / React Toastify
-- React Hook Form
-- Tailwind CSS
-- Framer Motion (for animations)
-- Yet-Another-React-Lightbox (gallery)
-- Moment.js (date formatting)
+### Frontend:
 
-### Server
-- Node.js
-- Express.js
-- MongoDB & Mongoose
-- CORS
-- dotenv
-- jsonwebtoken (JWT)
-- cookie-parser
+React.js
+
+React Router
+
+Firebase Authentication
+
+Tailwind CSS
+
+Framer Motion
+
+Axios
+
+React Hook Form
+
+SweetAlert2
+
+React Toastify
+
+Moment.js
+
+Yet-Another-React-Lightbox
+
+### Backend:
+
+Node.js
+
+Express.js
+
+MongoDB
+
+Mongoose
+
+JSON Web Token (JWT)
+
+dotenv
+
+cookie-parser
+
+CORS
 
 ---
 
-## 📦 NPM Packages Used
+## Core Features
+
+### Public Features
+
+* Homepage with banner, top-selling foods, and attractive sections
+* Browse all foods with search functionality
+* Single food details page with purchase option
+* Gallery page with lightbox-enabled images
+
+### Authenticated Features
+
+* Firebase email/password and Google authentication
+* JWT token-based private route protection
+* Add new food items (for restaurant owners)
+* Manage and update owned food items
+* Secure food purchase page with quantity restrictions
+* View and manage user orders
+
+### Additional Features
+
+* Real-time food search
+* Responsive design (mobile/tablet/desktop)
+* Dark/light theme toggle
+* Profile dropdown with navigation links
+* Loading spinners and animations
+* Secure environment variable management
+
+---
+
+## Dependencies
 
 ### Client-side
-react
-react-router
-react-router-dom
-firebase
-axios
-sweetalert2
-react-toastify
-react-hook-form
-tailwindcss
-framer-motion
-moment
-yet-another-react-lightbox
-shell
-Copy code
+
+```
+react  
+react-router  
+react-router-dom  
+firebase  
+axios  
+sweetalert2  
+react-toastify  
+react-hook-form  
+tailwindcss  
+framer-motion  
+moment  
+yet-another-react-lightbox  
+```
 
 ### Server-side
-express
-cors
-mongodb
-mongoose
-jsonwebtoken
-cookie-parser
-dotenv
+
+```
+express  
+cors  
+mongodb  
+mongoose  
+jsonwebtoken  
+cookie-parser  
+dotenv  
+```
+
+---
+
+## How to Run Locally
+
+### Prerequisites
+
+* Node.js installed
+* MongoDB instance or cluster (local or cloud)
+* Firebase project setup for authentication
+
+### Steps
+
+1. **Clone the repository:**
+
+   ```bash
+   git clone https://github.com/sariakhatun/restaurant-management-system
+   cd restaurant-management-system
+   ```
+
+2. **Client Setup:**
+
+   ```bash
+   cd client
+   npm install
+   ```
+
+   * Create a `.env` file in `client` directory with your Firebase config and any necessary environment variables.
+   * Start the client app:
+
+   ```bash
+   npm start
+   ```
+
+3. **Server Setup:**
+
+   ```bash
+   cd ../server
+   npm install
+   ```
+
+   * Create a `.env` file in `server` directory with your MongoDB URI, JWT secret, and other secrets.
+     Example `.env`:
+
+   ```
+   MONGO_URI=your_mongodb_connection_string
+   JWT_SECRET=your_jwt_secret_key
+   PORT=5000
+   ```
+
+   * Start the server:
+
+   ```bash
+   npm run dev
+   ```
+
+   *(Assuming you use nodemon with `dev` script)*
+
+4. **Open the client URL:**
+   Visit [http://localhost:3000](http://localhost:3000) to use the app locally.
+
+---
+
+## Additional Resources
+
+* Firebase Console: Configure Authentication
+* MongoDB Atlas: Manage your database cluster
+* Environment Variables: Keep your secrets secure
+
+---
+
+If you want, I can also help generate a matching **screenshot image** or a more visually styled Markdown file! Would you like that?
