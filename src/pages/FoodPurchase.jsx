@@ -75,7 +75,7 @@ const FoodPurchase = () => {
   };
 
   return (
-    <div className="max-w-xl mx-auto mt-10 bg-white p-6 rounded-xl shadow-md">
+    <div className="mx-auto mt-24 bg-white py-6 rounded-xl shadow-md">
       <h2 className="text-3xl font-bold text-center text-[#f74526] mb-6">
         Complete Your Purchase
       </h2>
@@ -92,7 +92,7 @@ const FoodPurchase = () => {
         </p>
       )}
 
-      <form onSubmit={handlePurchase} className="grid gap-6">
+      <form onSubmit={handlePurchase} className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
         <input type="hidden" name="availableQuantity" value={availableQuantity} />
         <input type="hidden" name="ownerEmail" value={ownerEmail} />
 

@@ -6,6 +6,7 @@ import Swal from "sweetalert2";
 import { toast, ToastContainer } from "react-toastify";
 import { provider } from "./AuthProvider";
 import { FaEyeSlash, FaGoogle, FaRegEye } from "react-icons/fa";
+import MyAnimation from "./MyAnimation";
 
 const Login = () => {
     let {loginUser,loginWithGoogle}=use(AuthContext)
@@ -55,7 +56,7 @@ const Login = () => {
 
      
     return (
-        <div className='my-12 flex justify-center mx-auto w-11/12 md:w-2/3 lg:w-1/3'>
+        <div className='my-24 flex flex-col-reverse md:flex-row lg:flex-row justify-center gap-12 items-center mx-auto '>
          
     <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
       <div className="card-body">
@@ -81,6 +82,9 @@ const Login = () => {
           <p className='font-bold py-3 text-center'>Don't Have An Account ? <Link className='text-[#ff6347] underline' to='/register'>Register</Link> </p>
         </form>
       </div>
+    </div>
+    <div>
+      <MyAnimation></MyAnimation>
     </div>
    
     

@@ -3,11 +3,11 @@ import React from 'react';
 const Testimonials = () => {
     return (
         <div className='rounded-4xl'>
-            <section className="py-16 bg-[#fff7f4] rounded-4xl">
+            <section className="pb-16 rounded-4xl">
   <h2 className="text-4xl font-bold text-center mb-10 text-[#f74526] great-vibes">
     What Our Customers Say
   </h2>
-  <div className="max-w-6xl mx-auto grid gap-8 px-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+  <div className=" mx-auto grid gap-8 px-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
     {[
       {
         name: "Sarah H.",

@@ -1,5 +1,9 @@
 @import "tailwindcss";
 @plugin "daisyui";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 .active{
   text-decoration: underline;
   color: #D94F30;

@@ -12,16 +12,16 @@ const TopFoods = () => {
   }, []);
 
   return (
-    <div className="max-w-6xl mx-auto px-4 py-12">
+    <div className=" mx-auto py-12 bg-white dark:bg-gray-900">
       <h2 className="text-3xl font-bold text-center text-[#f74526] mb-10">
         🍽️ Top Selling Foods
       </h2>
 
-      <div className="grid gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+      <div className="grid gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 ">
         {topFoods.map(food => (
           <div
             key={food._id}
-            className="bg-white rounded-xl shadow-md border border-[#ffd8cc] overflow-hidden"
+            className="bg-white rounded-xl shadow-md border border-[#ffd8cc] overflow-hidden "
           >
             <img
               src={food.imageUrl}
@@ -48,7 +48,7 @@ const TopFoods = () => {
 
       <div className="text-center mt-10">
         <Link to="/allFoods">
-          <button className="btn bg-gray-200 hover:bg-gray-300 text-[#f74526] px-6 py-2 rounded font-semibold">
+          <button className="btn  hover:bg-[#f74526] hover:text-white btn-outline text-[#f74526] px-6 py-2 rounded font-semibold">
             See All Foods
           </button>
         </Link>

@@ -7,6 +7,9 @@ const AllFoods = () => {
 
  // console.log(foods);
   let [search,setSearch]=useState('')
+  
+  let [sortOrder, setSortOrder] = useState(""); // 'asc' or 'desc'
+
  // console.log(search)
   useEffect(()=>{
     fetch(`https://b11a11-server-side-sariakhatun.vercel.app/foods?searchParams=${search}`)
@@ -15,16 +18,29 @@ const AllFoods = () => {
        setFoods(data)
     })
   },[search])
+
+  // Sort foods locally whenever foods or sortOrder changes
+  useEffect(() => {
+    if (sortOrder === "asc") {
+      setFoods((prevFoods) =>
+        [...prevFoods].sort((a, b) => a.price - b.price)
+      );
+    } else if (sortOrder === "desc") {
+      setFoods((prevFoods) =>
+        [...prevFoods].sort((a, b) => b.price - a.price)
+      );
+    }
+  }, [sortOrder]);
   return (
     <div>
       {/* Page Title Section */}
-      <div className="bg-gradient-to-r from-[#f74526] to-[#ff9a8b] py-20 text-center text-white rounded-tr-4xl rounded-bl-4xl mb-4">
+      <div className="bg-gradient-to-r from-[#f74526] to-[#ff9a8b] mt-24 py-20 text-center text-white rounded-tr-4xl rounded-bl-4xl mb-4">
         <h1 className="text-4xl md:text-5xl font-bold great-vibes">
           All Delicious Foods
         </h1>
       </div>
       {/* search */}
-      <div className="flex items-center justify-center">
+      <div className="flex items-center justify-center gap-4">
         <label className="input mt-4">
         <svg
           className="h-[1em] opacity-50 "
@@ -42,13 +58,23 @@ const AllFoods = () => {
             <path d="m21 21-4.3-4.3"></path>
           </g>
         </svg>
-        <input type="search" className="grow" placeholder="Search" onChange={(e)=>setSearch(e.target.value)}/>
+        <input type="search" className="grow" placeholder="Search by name..." onChange={(e)=>setSearch(e.target.value)}/>
        
       </label>
+       <select
+          className="input mt-4 input-bordered w-full md:w-1/4 rounded border  "
+          value={sortOrder}
+          onChange={(e) => setSortOrder(e.target.value)}
+          aria-label="Sort foods by price"
+        >
+          <option value="">Sort by Price</option>
+          <option value="asc">Price: Low to High ↑</option>
+          <option value="desc">Price: High to Low ↓</option>
+        </select>
       </div>
 
       {/* Food Cards Section */}
-      <div className="max-w-6xl mx-auto px-4 py-12 grid gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+      <div className=" mx-auto py-12 grid gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
         {foods.map((food) => (
           <div
             key={food._id}

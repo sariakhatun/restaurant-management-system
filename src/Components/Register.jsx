@@ -6,6 +6,7 @@ import Swal from "sweetalert2";
 import { toast, ToastContainer } from "react-toastify";
 import { FaEyeSlash, FaGoogle, FaRegEye } from "react-icons/fa";
 import { provider } from "./AuthProvider";
+import MyAnimation from "./MyAnimation";
 const Register = () => {
   let { createUser, setUser,updateUser, loginWithGoogle } = use(AuthContext);
 
@@ -85,7 +86,7 @@ const Register = () => {
         })
     }
   return (
-    <div className="my-12 flex justify-center w-11/12 md:w-2/3 lg:w-1/3 mx-auto">
+    <div className="my-24 flex flex-col-reverse md:flex-row lg:flex-row justify-center gap-12 items-center mx-auto ">
       <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl ">
         <div className="card-body">
           <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold py-5 text-center">
@@ -178,6 +179,9 @@ const Register = () => {
           </form>
         </div>
       </div>
+      <div>
+      <MyAnimation></MyAnimation>
+    </div>
      
     </div>
   );

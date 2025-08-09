@@ -33,7 +33,7 @@ const Gallery = () => {
   ];
 
   return (
-    <section className="pb-6 dark:bg-gray-100 dark:text-gray-900">
+    <section className="pb-6 mt-24 dark:bg-gray-100 dark:text-gray-900">
       <div className="bg-gradient-to-r from-[#f74526] to-[#ff9a8b] py-20 text-center text-white rounded-tl-4xl rounded-br-4xl mb-12">
         <h1 className="text-white text-4xl md:text-5xl lg:text-6xl great-vibes font-extrabold drop-shadow-[0_5px_30px_rgba(255,255,255,0.5)]">
           Moments of Flavor
@@ -44,7 +44,7 @@ const Gallery = () => {
         </p>
       </div>
 
-      <div className="container grid grid-cols-2 gap-4 p-4 mx-auto md:grid-cols-4 w-11/12">
+      <div className="container grid grid-cols-2 gap-4 py-4 mx-auto md:grid-cols-4 ">
         {images.map((img, i) => (
           <img
             key={i}

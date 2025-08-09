@@ -22,14 +22,17 @@ const SingleFood = () => {
     purchaseCount = 0,
   } = food;
   return (
-    <div className="max-w-4xl mx-auto p-6 mt-10 bg-white rounded-xl shadow-lg">
-      <img
+    <div className="mx-auto py-6 mt-24 bg-white rounded-xl shadow-lg lg:flex justify-around">
+      <div>
+        <img
         src={imageUrl}
         alt={foodName}
         className="w-full h-72 object-cover rounded-xl mb-6"
       />
+      </div>
 
-      <h2 className="text-4xl font-bold text-[#f74526] mb-4">{foodName}</h2>
+      <div>
+        <h2 className="text-4xl font-bold text-[#f74526] mb-4">{foodName}</h2>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-gray-700">
         <p>
@@ -64,6 +67,7 @@ const SingleFood = () => {
             Purchase
           </button>
         </Link>
+      </div>
       </div>
     </div>
   );

@@ -4,7 +4,7 @@ import { Link } from "react-router";
 const Banner = () => {
   return (
     <div
-      className="hero min-h-screen relative rounded-2xl mb-12"
+      className="hero h-[630px] relative rounded-2xl mb-12 mt-24 "
       style={{
         backgroundImage: `url(${banner})`,
         backgroundSize: "cover",
