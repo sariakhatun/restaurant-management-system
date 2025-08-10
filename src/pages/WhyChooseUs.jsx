@@ -38,7 +38,7 @@ const WhyChooseUs = () => {
   const featuresData = features(textPrimary, iconColor);
 
   return (
-    <section className="mx-auto pb-12 mb-12 rounded-xl px-4 sm:px-8">
+    <section className="mx-auto pb-12 mb-12 rounded-xl  sm:px-8">
       <h2 className={`text-4xl great-vibes font-extrabold text-center mb-8 drop-shadow-sm ${textPrimary}`}>
         Why Choose Us?
       </h2>
@@ -46,7 +46,7 @@ const WhyChooseUs = () => {
         {featuresData.map(({ icon, title, desc }, idx) => (
           <div
             key={idx}
-            className={`text-center p-6 border ${borderColor} rounded-xl shadow-md hover:shadow-xl transform hover:scale-105 transition duration-300 cursor-pointer ${hoverShadow}`}
+            className={`text-center p-6 border ${borderColor} rounded-xl shadow-md hover:shadow-xl transform hover:scale-105 transition duration-300 cursor-pointer grid-cols-1 md:grid-cols-2 lg:grid-cols-3 ${hoverShadow}`}
           >
             <div className="flex justify-center">{icon}</div>
             <h3 className={`text-xl font-semibold mt-3 mb-2 ${textPrimary}`}>{title}</h3>

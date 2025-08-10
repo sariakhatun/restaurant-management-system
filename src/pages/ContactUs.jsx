@@ -44,13 +44,13 @@ const ContactUs = () => {
 
 
   return (
-    <div className={`mx-auto pb-8 rounded-xl shadow-lg mb-12 w-full px-6 `}>
+    <div className={`mx-auto pb-8 rounded-xl shadow-lg mb-12  px-6 `}>
       <h2 className={`text-4xl font-bold text-center mb-10 great-vibes ${textPrimary}`}>Contact Us</h2>
-     <div className="flex items-center justify-between">
-      <div className="w-1/2" style={{ width: 500, height: 500 }}>
+     <div className="flex flex-col lg:flex-row items-center justify-around">
+      <div className="" style={{width: 300, height: 400 }}>
           <Lottie animationData={animationData} loop={true} />
         </div>
-      <form onSubmit={handleSubmit} className="grid gap-6 grid-cols-1 w-1/2">
+      <form onSubmit={handleSubmit} className="grid gap-3 grid-cols-1">
         <div>
           <label className={`block mb-1 font-medium ${labelTextClass}`}>Name</label>
           <input
@@ -89,7 +89,7 @@ const ContactUs = () => {
         </div>
 
         <div className="text-center">
-          <button type="submit" className={`${btnClass} px-10 mt-6`}>
+          <button type="submit" className={`${btnClass} px-10 mt-6 w-full`}>
             Send Message
           </button>
         </div>
