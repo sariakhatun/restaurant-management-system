@@ -6,6 +6,8 @@ import TopFoods from './TopFoods';
 import SpecialOffers from './SpecialOffers';
 import WhyChooseUs from './WhyChooseUs';
 import OurServices from './OurServices ';
+import ContactUs from './ContactUs';
+import Reservation from './Reservation';
 
 const Home = () => {
     return (
@@ -18,6 +20,8 @@ const Home = () => {
             <Chefs></Chefs>
             <Testimonials></Testimonials>
             <WhyChooseUs></WhyChooseUs>
+            
+            <ContactUs></ContactUs>
         </div>
     );
 };
