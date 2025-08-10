@@ -26,8 +26,8 @@ const Testimonials = () => {
   ];
 
   return (
-    <div className="rounded-4xl py-12">
-      <section className="pb-16 rounded-4xl">
+    <div className="rounded-4xl pb-12 mb-12">
+      <section className=" rounded-4xl">
         <h2 className={`text-4xl font-bold text-center mb-10 ${textPrimary} great-vibes`}>
           What Our Customers Say
         </h2>
@@ -35,7 +35,7 @@ const Testimonials = () => {
           {testimonials.map((testimonial, idx) => (
             <div
               key={idx}
-              className={`${cardBg} p-6 rounded-2xl shadow-md border ${cardBorder}`}
+              className={`${cardBg} p-6 rounded-xl shadow-md border ${cardBorder}`}
             >
               <p className={`${textSecondary} italic`}>
                 “{testimonial.review}”

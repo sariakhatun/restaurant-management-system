@@ -24,8 +24,8 @@ const TopFoods = () => {
   const buttonText = "text-white";
 
   return (
-    <div className={`mx-auto py-12`}>
-      <h2 className={`text-3xl font-bold text-center ${textPrimary} mb-10`}>
+    <div className={`mx-auto py-12 mb-12`}>
+      <h2 className={`text-4xl font-bold text-center ${textPrimary} great-vibes mb-10`}>
         🍽️ Top Selling Foods
       </h2>
 
@@ -58,7 +58,7 @@ const TopFoods = () => {
         ))}
       </div>
 
-      <div className="text-center mt-10">
+      <div className="text-center mt-6">
         <Link to="/allFoods">
           <button className={`btn btn-outline px-6 py-2 rounded font-semibold ${textPrimary} hover:${buttonBg} hover:text-white`}>
             See All Foods

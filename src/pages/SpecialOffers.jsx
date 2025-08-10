@@ -32,15 +32,15 @@ const SpecialOffers = () => {
   ];
 
   return (
-    <section className="mx-auto mb-20 rounded-xl">
-      <h2 className={`text-3xl font-extrabold text-center mb-10 drop-shadow-sm ${headingText}`}>
+    <section className="mx-auto mb-12 pb-12 rounded-xl">
+      <h2 className={`text-4xl font-extrabold text-center mb-10 drop-shadow-sm ${headingText} great-vibes`}>
         🔥 Special Offers 🔥
       </h2>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
         {offers.map(({ icon, title, desc }, idx) => (
           <div
             key={idx}
-            className={`${cardBg} rounded-3xl p-8 shadow-md hover:shadow-xl transform hover:scale-105 transition duration-300 cursor-pointer border ${cardBorder}`}
+            className={`${cardBg} rounded-xl p-8 shadow-md hover:shadow-xl transform hover:scale-105 transition duration-300 cursor-pointer border ${cardBorder}`}
           >
             <div className="flex justify-center">{icon}</div>
             <h3 className={`text-xl font-semibold text-center mb-3 ${titleText}`}>

@@ -24,8 +24,8 @@ const Chefs = () => {
   const roleText = theme === "dark" ? "text-gray-300" : "text-gray-600";
 
   return (
-    <div className="my-8">
-      <section className="pb-12 rounded-4xl">
+    <div className="mb-12 pb-12">
+      <section className=" rounded-4xl">
         <h2 className={`text-4xl font-bold text-center mb-10 great-vibes ${nameText}`}>
           Meet Our Master Chefs
         </h2>

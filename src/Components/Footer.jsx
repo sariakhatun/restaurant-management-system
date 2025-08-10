@@ -7,8 +7,8 @@ const Footer = () => {
     const headingColor = theme === "dark" ? "text-orange-400" : "text-[#f74526]";
 
   return (
-    <div className="px-6 shadow-lg border-gray-100 mt-12">
-      <footer className="px-4 divide-y dark:bg-gray-100 dark:text-gray-800">
+    <div className="shadow-lg border-gray-100 mt-12">
+      <footer className="w-11/12 mx-auto divide-y dark:bg-gray-100 dark:text-gray-800">
         <div className="container flex flex-col justify-between py-10 mx-auto space-y-8 lg:flex-row lg:space-y-0">
           <div className="lg:w-1/3">
             <a
@@ -17,7 +17,7 @@ const Footer = () => {
               className="flex justify-center space-x-3 lg:justify-start"
             >
               <div className="font-bold text-3xl md:text-4xl lg:text-5xl ">
-                <p className='logo font-extrabold'>Taste<span className={`${headingColor}`}>Hub</span></p>
+                <p className='logo font-extrabold great-vibes'>Taste<span className={`${headingColor}`}>Hub</span></p>
               </div>
             </a>
           </div>

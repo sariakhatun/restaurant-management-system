@@ -1,17 +1,30 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import useAuth from "../hooks/useAuth";
 import { ToastContainer } from "react-toastify";
 import Loading from "../Components/Loading";
 import moment from "moment";
 import axios from "axios";
 import Swal from "sweetalert2";
-import { useLocation } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 import { auth } from "../Firebase/Firebase.init";
 import { ThemeContext } from "../Components/ThemeContext";
 
 const FoodPurchase = () => {
   const { user } = useAuth();
-  const location = useLocation();
+  const location = useLocation() || {};
+    const navigate = useNavigate();
+
+   useEffect(() => {
+    if (!location.state) {
+      // If no state is found, redirect to home or any fallback page
+      navigate("/", { replace: true });
+    }
+  }, [location.state, navigate]);
+
+  // If location.state is null, don’t destructure to avoid error
+  if (!location.state) {
+    return <Loading></Loading>;
+  }
   const {
     imageUrl,
     foodName,

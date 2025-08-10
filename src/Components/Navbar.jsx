@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState, useRef, useEffect } from "react";
 import logo from "../assets/logo.jpg";
 import { NavLink, useNavigate } from "react-router";
 import { toast, ToastContainer } from "react-toastify";
@@ -8,8 +8,12 @@ import { ThemeContext } from "./ThemeContext";
 
 const Navbar = () => {
   let navigate = useNavigate();
-  let { user, logOut } = useContext(AuthContext); // fixed from use() to useContext()
+  let { user, logOut } = useContext(AuthContext);
   let { theme, toggleTheme } = useContext(ThemeContext);
+
+  // Dropdown state to toggle visibility
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const dropdownRef = useRef(null);
 
   let handleLogin = () => {
     navigate("/login");
@@ -21,13 +25,28 @@ const Navbar = () => {
     logOut()
       .then(() => {
         toast.success("Logged out successfully!");
+        setDropdownOpen(false); // close dropdown on logout
       })
       .catch((error) => {
         toast.error(`Error: ${error.message}`);
       });
   };
 
-  // Define color classes based on theme
+  // Close dropdown if clicked outside
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target)
+      ) {
+        setDropdownOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  // Theme-based classes
   const headingColor = theme === "dark" ? "text-orange-400" : "text-[#f74526]";
   const btnTextColor = theme === "dark" ? "text-orange-400" : "text-[#ff6347]";
   const btnHoverBg = theme === "dark" ? "hover:bg-orange-400" : "hover:bg-[#ff6347]";
@@ -37,7 +56,7 @@ const Navbar = () => {
       <div className={`navbar bg-base-100 shadow-sm fixed top-0 left-0 z-50 w-full mx-auto`}>
         <div className="navbar max-w-11/12 container mx-auto px-4">
           {/* Navbar Start */}
-          <div className="navbar-start flex gap-4 -ml-6 lg:-ml-0">
+         <div className="navbar-start flex gap-4 -ml-6 lg:-ml-0">
             <div className="dropdown">
               <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
                 <svg
@@ -54,7 +73,7 @@ const Navbar = () => {
                 tabIndex={0}
                 className="menu menu-sm dropdown-content bg-base-100 rounded-box z-10 mt-3 w-52 p-2 shadow"
               >
-                <NavLink className={``} to="/">Home</NavLink>
+                <NavLink to="/">Home</NavLink>
                 <NavLink to="/allFoods">All Foods</NavLink>
                 <NavLink to="/gallery">Gallery</NavLink>
                 {user && (
@@ -68,8 +87,8 @@ const Navbar = () => {
             </div>
             <div className="flex lg:gap-2 items-center -ml-4">
               <img src={logo} alt="Logo" className="w-10 h-10 lg:w-12 lg:h-12 rounded-full" />
-              <div className={`font-bold text-xl md:text-2xl lg:text-3xl `}>
-                <p className="logo font-extrabold">
+              <div className={`font-bold text-xl md:text-2xl lg:text-3xl`}>
+                <p className="logo font-extrabold great-vibes">
                   Taste<span className={`${headingColor}`}>Hub</span>
                 </p>
               </div>
@@ -97,7 +116,7 @@ const Navbar = () => {
           {/* Navbar End */}
           <div className="navbar-end flex gap-4 ml-6">
             {user ? (
-              <div className="flex gap-1 lg:gap-3 items-center ml-6 lg:ml-0">
+              <div className="flex gap-1 lg:gap-3 items-center ml-6 lg:ml-0 relative" ref={dropdownRef}>
                 {/* Theme Toggle */}
                 <label className="swap swap-rotate cursor-pointer">
                   <input
@@ -126,24 +145,59 @@ const Navbar = () => {
                   </svg>
                 </label>
 
-                {/* User Image */}
-                <div className="dropdown">
-                  <div tabIndex={0} role="button" className="">
-                    <img
-                      src={user?.photoURL}
-                      alt="User Avatar"
-                      className="w-8 h-8 lg:w-12 lg:h-12 rounded-full"
-                    />
-                  </div>
-                </div>
+                {/* User Image (click toggles dropdown) */}
+                <img
+                  src={user?.photoURL}
+                  alt="User Avatar"
+                  className="w-8 h-8 lg:w-12 lg:h-12 rounded-full cursor-pointer"
+                  onClick={() => setDropdownOpen(!dropdownOpen)}
+                  title="Click to toggle profile menu"
+                />
 
-                {/* Logout Button */}
-                <button
-                  onClick={handleLogOut}
-                  className={`btn btn-xs lg:btn-sm btn-outline ${btnTextColor} ${btnHoverBg} hover:text-white`}
-                >
-                  LogOut
-                </button>
+                {/* Dropdown menu */}
+               {/* Dropdown menu */}
+{dropdownOpen && (
+  <div className="absolute right-0 mt-40 w-56 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 z-50 p-4">
+    {/* Close Icon */}
+    <button
+      onClick={() => setDropdownOpen(false)}
+      className="absolute top-2 right-2 text-gray-500 hover:text-gray-700 dark:hover:text-gray-300"
+      aria-label="Close profile menu"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        className="h-5 w-5"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth={2}
+          d="M6 18L18 6M6 6l12 12"
+        />
+      </svg>
+    </button>
+
+    <div className="flex flex-col items-center gap-2 mb-4">
+      <img
+        src={user?.photoURL}
+        alt="User Avatar"
+        className="w-16 h-16 rounded-full"
+      />
+      <p className="font-semibold text-gray-900 dark:text-gray-100">{user?.displayName || "No Name"}</p>
+      <p className="text-sm text-gray-600 dark:text-gray-300">{user?.email}</p>
+    </div>
+    <button
+      onClick={handleLogOut}
+      className={`btn btn-outline w-full ${btnTextColor} ${btnHoverBg} hover:text-white`}
+    >
+      Logout
+    </button>
+  </div>
+)}
+
               </div>
             ) : (
               <div className="navbar-end flex gap-1 lg:gap-4">
@@ -194,7 +248,8 @@ const Navbar = () => {
           </div>
         </div>
       </div>
-      <ToastContainer
+
+      {/* <ToastContainer
         position="top-right"
         autoClose={3000}
         hideProgressBar={false}
@@ -205,7 +260,7 @@ const Navbar = () => {
         draggable
         pauseOnHover
         theme="colored"
-      />
+      /> */}
     </div>
   );
 };
