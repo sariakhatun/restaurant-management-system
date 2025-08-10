@@ -54,7 +54,7 @@ const Navbar = () => {
                 tabIndex={0}
                 className="menu menu-sm dropdown-content bg-base-100 rounded-box z-10 mt-3 w-52 p-2 shadow"
               >
-                <NavLink to="/">Home</NavLink>
+                <NavLink className={``} to="/">Home</NavLink>
                 <NavLink to="/allFoods">All Foods</NavLink>
                 <NavLink to="/gallery">Gallery</NavLink>
                 {user && (

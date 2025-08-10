@@ -5,8 +5,7 @@
    themes: light --default, dark --prefersdark, ;
  } */
   /* global.css (or index.css) */
-:root[data-theme="light"] .top-title { color: #f74526; }
-:root[data-theme="dark"]  .top-title { color: #ffdd99; }
+
 
 .active{
   text-decoration: underline;
