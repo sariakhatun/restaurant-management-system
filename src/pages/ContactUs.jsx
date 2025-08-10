@@ -50,7 +50,7 @@ const ContactUs = () => {
       <div className="" style={{width: 300, height: 400 }}>
           <Lottie animationData={animationData} loop={true} />
         </div>
-      <form onSubmit={handleSubmit} className="grid gap-3 grid-cols-1">
+      <form onSubmit={handleSubmit} className="grid gap-3 grid-cols-1 lg:w-1/2">
         <div>
           <label className={`block mb-1 font-medium ${labelTextClass}`}>Name</label>
           <input
