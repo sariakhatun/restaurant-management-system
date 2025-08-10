@@ -38,11 +38,11 @@ const WhyChooseUs = () => {
   const featuresData = features(textPrimary, iconColor);
 
   return (
-    <section className="mx-auto pb-12 mb-12 rounded-xl  sm:px-8">
+    <section className="mx-auto pb-12 mb-12 rounded-xl ">
       <h2 className={`text-4xl great-vibes font-extrabold text-center mb-8 drop-shadow-sm ${textPrimary}`}>
         Why Choose Us?
       </h2>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-10">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
         {featuresData.map(({ icon, title, desc }, idx) => (
           <div
             key={idx}

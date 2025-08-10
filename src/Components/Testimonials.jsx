@@ -26,12 +26,12 @@ const Testimonials = () => {
   ];
 
   return (
-    <div className="rounded-4xl pb-12 mb-12">
-      <section className=" rounded-4xl">
+    <div className="rounded-xl pb-12 mb-12">
+      <section className=" rounded-xl">
         <h2 className={`text-4xl font-bold text-center mb-10 ${textPrimary} great-vibes`}>
           What Our Customers Say
         </h2>
-        <div className="mx-auto grid gap-8 px-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+        <div className="mx-auto grid gap-8  grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
           {testimonials.map((testimonial, idx) => (
             <div
               key={idx}
