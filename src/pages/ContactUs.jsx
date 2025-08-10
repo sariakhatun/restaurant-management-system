@@ -32,7 +32,7 @@ const ContactUs = () => {
   };
 
   // Theme-based classes
-  const containerBgClass = theme === "dark" ? "bg-gray-900 text-white" : "bg-white text-gray-900";
+  
   const inputBgClass = theme === "dark" ? "bg-gray-700 text-white" : "bg-white text-gray-900";
   const labelTextClass = theme === "dark" ? "text-gray-300" : "text-gray-700";
   const textareaBgClass = theme === "dark" ? "bg-gray-700 text-white" : "bg-white text-gray-900";
