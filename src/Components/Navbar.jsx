@@ -132,7 +132,7 @@ const Navbar = () => {
           <div className="navbar-end flex gap-4 ml-6">
             {user ? (
               <div
-                className="flex gap-1 lg:gap-3 items-center ml-6 lg:ml-0 relative"
+                className="flex gap-1 lg:gap-3 items-center -mr-8 lg:mr-0 ml-6 lg:ml-0 relative"
                 ref={dropdownRef}
               >
                 {/* Theme Toggle */}
