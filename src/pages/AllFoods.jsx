@@ -29,7 +29,7 @@ const AllFoods = () => {
   }, [sortOrder]);
 
   // Define colors based on theme
-  const headingTextClass = theme === "dark" ? "text-orange-400" : "text-white";
+  const headingTextClass = theme === "dark" ? "text-orange-400" : "text-[#f74526]";
   const bgGradientClass = theme === "dark" 
     ? "bg-gradient-to-r from-gray-800 via-gray-900 to-black" 
     : "bg-gradient-to-r from-[#f74526] to-[#ff9a8b]";
