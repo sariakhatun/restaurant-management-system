@@ -1,9 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { Link } from "react-router";
 import axios from "axios";
+import { ThemeContext } from "../Components/ThemeContext";
+
 
 const TopFoods = () => {
   const [topFoods, setTopFoods] = useState([]);
+  const { theme } = useContext(ThemeContext);
 
   useEffect(() => {
     axios.get("https://b11a11-server-side-sariakhatun.vercel.app/topFoods")
@@ -11,17 +14,26 @@ const TopFoods = () => {
       .catch(err => console.error("Failed to fetch top foods", err));
   }, []);
 
+  // Define styles based on theme
+  
+  const cardBg = theme === "dark" ? "bg-gray-800" : "bg-white";
+  const cardBorder = theme === "dark" ? "border-gray-700" : "border-[#ffd8cc]";
+  const textPrimary = theme === "dark" ? "text-orange-400" : "text-[#f74526]";
+  const textSecondary = theme === "dark" ? "text-gray-300" : "text-gray-700";
+  const buttonBg = theme === "dark" ? "bg-orange-400 hover:bg-orange-600" : "bg-[#f74526] hover:bg-[#e43c1c]";
+  const buttonText = "text-white";
+
   return (
-    <div className=" mx-auto py-12 bg-white dark:bg-gray-900">
-      <h2 className="text-3xl font-bold text-center text-[#f74526] mb-10">
+    <div className={`mx-auto py-12`}>
+      <h2 className={`text-3xl font-bold text-center ${textPrimary} mb-10`}>
         🍽️ Top Selling Foods
       </h2>
 
-      <div className="grid gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 ">
+      <div className="grid gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
         {topFoods.map(food => (
           <div
             key={food._id}
-            className="bg-white rounded-xl shadow-md border border-[#ffd8cc] overflow-hidden "
+            className={`${cardBg} rounded-xl shadow-md border ${cardBorder} overflow-hidden`}
           >
             <img
               src={food.imageUrl}
@@ -29,14 +41,14 @@ const TopFoods = () => {
               className="w-full h-60 object-cover"
             />
             <div className="p-4">
-              <h3 className="text-xl font-semibold text-[#f74526]">
+              <h3 className={`text-xl font-semibold ${textPrimary}`}>
                 {food.foodName}
               </h3>
-              <p className="text-gray-700">Price: ${food.price}</p>
-              <p className="text-gray-700">Sold: {food.purchaseCount} times</p>
+              <p className={textSecondary}>Price: ${food.price}</p>
+              <p className={textSecondary}>Sold: {food.purchaseCount} times</p>
               <div className="text-right mt-4">
                 <Link to={`/singleFood/${food._id}`}>
-                  <button className="btn bg-[#f74526] hover:bg-[#e43c1c] text-white px-4 py-2 rounded">
+                  <button className={`btn ${buttonBg} ${buttonText} px-4 py-2 rounded`}>
                     Details
                   </button>
                 </Link>
@@ -48,7 +60,7 @@ const TopFoods = () => {
 
       <div className="text-center mt-10">
         <Link to="/allFoods">
-          <button className="btn  hover:bg-[#f74526] hover:text-white btn-outline text-[#f74526] px-6 py-2 rounded font-semibold">
+          <button className={`btn btn-outline px-6 py-2 rounded font-semibold ${textPrimary} hover:${buttonBg} hover:text-white`}>
             See All Foods
           </button>
         </Link>

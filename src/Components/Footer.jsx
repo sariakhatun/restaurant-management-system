@@ -1,7 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import logo2 from '../assets/logo2.webp';
+import { ThemeContext } from './ThemeContext';
 
 const Footer = () => {
+  let {theme}=useContext(ThemeContext)
+    const headingColor = theme === "dark" ? "text-orange-400" : "text-[#f74526]";
+
   return (
     <div className="px-6 shadow-lg border-gray-100 mt-12">
       <footer className="px-4 divide-y dark:bg-gray-100 dark:text-gray-800">
@@ -13,7 +17,7 @@ const Footer = () => {
               className="flex justify-center space-x-3 lg:justify-start"
             >
               <div className="font-bold text-3xl md:text-4xl lg:text-5xl ">
-                <p className='logo font-extrabold'>Taste<span className='text-[#f74526]'>Hub</span></p>
+                <p className='logo font-extrabold'>Taste<span className={`${headingColor}`}>Hub</span></p>
               </div>
             </a>
           </div>

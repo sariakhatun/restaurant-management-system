@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Lightbox from "yet-another-react-lightbox";
 import Thumbnails from "yet-another-react-lightbox/plugins/thumbnails";
 import "yet-another-react-lightbox/styles.css";
@@ -14,10 +14,16 @@ import chowmin from "../assets/chowmin.jpg";
 import vegetables from "../assets/vegetables.jpg";
 import panir from "../assets/panir.jpg";
 import carrot from "../assets/carrot.jpg";
+import { ThemeContext } from "../Components/ThemeContext";
 
 const Gallery = () => {
   const [open, setOpen] = useState(false);
   const [index, setIndex] = useState(0);
+  let {theme}=useContext(ThemeContext)
+   const headingTextClass = theme === "dark" ? "text-orange-400" : "text-white";
+   const bgGradientClass = theme === "dark" 
+    ? "bg-gradient-to-r from-gray-800 via-gray-900 to-black" 
+    : "bg-gradient-to-r from-[#f74526] to-[#ff9a8b]";
 
   const images = [
     { src: pic1 },
@@ -33,15 +39,17 @@ const Gallery = () => {
   ];
 
   return (
-    <section className="pb-6 mt-24 dark:bg-gray-100 dark:text-gray-900">
-      <div className="bg-gradient-to-r from-[#f74526] to-[#ff9a8b] py-20 text-center text-white rounded-tl-4xl rounded-br-4xl mb-12">
-        <h1 className="text-white text-4xl md:text-5xl lg:text-6xl great-vibes font-extrabold drop-shadow-[0_5px_30px_rgba(255,255,255,0.5)]">
+    <section className={`pb-6 mt-24 dark:bg-gray-100 dark:text-gray-900`}>
+      <div className={`${bgGradientClass} p-8 text-center text-white rounded-tl-4xl rounded-br-4xl mb-12`}>
+        <div className={`${headingTextClass}`}>
+          <h1 className=" text-4xl md:text-5xl lg:text-6xl great-vibes font-extrabold drop-shadow-[0_5px_30px_rgba(255,255,255,0.5)]">
           Moments of Flavor
         </h1>
-        <p className="text-white mt-4 text-lg md:text-xl max-w-2xl mx-auto font-medium great-vibes">
+        <p className=" mt-4 text-lg md:text-xl max-w-2xl mx-auto font-medium great-vibes">
           Dive into our gallery where every dish tells a story — rich, colorful,
           and mouthwatering. Discover the artistry behind each plate.
         </p>
+        </div>
       </div>
 
       <div className="container grid grid-cols-2 gap-4 py-4 mx-auto md:grid-cols-4 ">

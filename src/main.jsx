@@ -6,13 +6,16 @@ import { RouterProvider } from 'react-router'
 import router from './router/router.jsx'
 import AuthProvider from './Components/AuthProvider.jsx'
 import ScrollToTop from './pages/ScrollToTop.jsx'
+import { ThemeProvider } from './Components/ThemeContext.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <AuthProvider>
+   <ThemeProvider>
+     <AuthProvider>
      <RouterProvider router={router}></RouterProvider>
      
   </AuthProvider>
+   </ThemeProvider>
  
   </StrictMode>,
 )
