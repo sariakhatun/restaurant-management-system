@@ -16,6 +16,9 @@ import FoodPurchase from "../pages/FoodPurchase";
 import Error from "../pages/Error";
 import UpdateFood from "../pages/UpdateFood";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
+import Dashboard from "../pages/Dashboard";
+import Profile from "../pages/Profile";
+import Settings from "../pages/Settings";
 
 const router = createBrowserRouter([
   {
@@ -26,6 +29,33 @@ const router = createBrowserRouter([
         index: true,
         path: "/",
         element: <Home></Home>,
+      },
+      {
+        path: "/dashboard",
+        element: <Dashboard />,
+        children: [
+          {
+            index:true,
+            path: "profile",
+            element: <Profile></Profile>,
+          },
+          {
+            path: "orders",
+            element: (
+              <PrivateRoute>
+                <MyOrders></MyOrders>
+              </PrivateRoute>
+            ),
+          },
+          {
+            path: "settings",
+            element: (
+              <PrivateRoute>
+                <Settings></Settings>
+              </PrivateRoute>
+            ),
+          },
+        ],
       },
       {
         path: "/allFoods",
@@ -79,14 +109,7 @@ const router = createBrowserRouter([
           </PrivateRoute>
         ),
       },
-      {
-        path: "/myOrders",
-        element: (
-          <PrivateRoute>
-            <MyOrders></MyOrders>
-          </PrivateRoute>
-        ),
-      },
+
       //   {
       //     path: "/updatePost/:id",
       //     element: (

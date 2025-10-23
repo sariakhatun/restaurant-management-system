@@ -1,49 +1,41 @@
 import React, { useContext, useState, useRef, useEffect } from "react";
 import logo from "../assets/logo.jpg";
 import { NavLink, useNavigate } from "react-router";
-import { toast, ToastContainer } from "react-toastify";
-
+import { toast } from "react-toastify";
+import { BsSun, BsMoon } from "react-icons/bs";
 import { AuthContext } from "./AuthContext";
 import { ThemeContext } from "./ThemeContext";
 
 const Navbar = () => {
-  let navigate = useNavigate();
-  let { user, logOut } = useContext(AuthContext);
-  let { theme, toggleTheme } = useContext(ThemeContext);
+  const navigate = useNavigate();
+  const { user, logOut } = useContext(AuthContext);
+  const { theme, toggleTheme } = useContext(ThemeContext);
 
-  // Dropdown state to toggle visibility
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
 
-  let handleLogin = () => {
-    navigate("/login");
-  };
-  let handleRegister = () => {
-    navigate("/register");
-  };
-  let handleLogOut = () => {
+  const handleLogin = () => navigate("/login");
+  const handleRegister = () => navigate("/register");
+
+  const handleLogOut = () => {
     logOut()
       .then(() => {
         toast.success("Logged out successfully!");
-        setDropdownOpen(false); // close dropdown on logout
+        setDropdownOpen(false);
       })
-      .catch((error) => {
-        toast.error(`Error: ${error.message}`);
-      });
+      .catch((error) => toast.error(`Error: ${error.message}`));
   };
 
-  // Close dropdown if clicked outside
   useEffect(() => {
-    function handleClickOutside(event) {
+    const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
         setDropdownOpen(false);
       }
-    }
+    };
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  // Theme-based classes
   const headingColor = theme === "dark" ? "text-orange-400" : "text-[#f74526]";
   const btnTextColor = theme === "dark" ? "text-orange-400" : "text-[#ff6347]";
   const btnHoverBg =
@@ -51,22 +43,65 @@ const Navbar = () => {
 
   return (
     <div>
-      <div
-        className={`navbar bg-base-100 shadow-sm fixed top-0 left-0 z-50 w-full mx-auto`}
-      >
-        <div className="navbar max-w-11/12 container mx-auto px-4">
-          {/* Navbar Start */}
-          <div className="navbar-start flex gap-1 -ml-12 lg:-ml-0">
-            {/* hamburger */}
-            <div className="dropdown">
-              <div
-                tabIndex={0}
-                role="button"
-                className="btn btn-ghost lg:hidden"
-              >
+      <div className="navbar bg-base-100 shadow-sm fixed top-0  z-50 px-4 lg:px-12">
+        <div className="navbar container mx-auto px-4 flex justify-between">
+          {/* Left: Logo */}
+          <div className="flex items-center gap-2">
+            <img
+              src={logo}
+              alt="Logo"
+              className="w-10 h-10 lg:w-12 lg:h-12 rounded-full hidden lg:block"
+            />
+            <div className="font-bold text-xl md:text-2xl lg:text-3xl ml-10 lg:ml-0">
+              <p className="logo font-extrabold great-vibes">
+                Taste<span className={`${headingColor}`}>Hub</span>
+              </p>
+            </div>
+          </div>
+
+          {/* Center: Desktop Nav Links */}
+          <div className="hidden lg:flex">
+            <ul className="flex gap-8">
+              <NavLink className='font-bold'  to="/">Home</NavLink>
+              <NavLink className='font-bold'  to="/allFoods">All Foods</NavLink>
+              <NavLink className='font-bold'  to="/gallery">Gallery</NavLink>
+              {user && (
+                <>
+                  <NavLink className='font-bold'  to="/myFood">My Foods</NavLink>
+                  <NavLink className='font-bold'  to="/addFood">Add Food</NavLink>
+                  
+                </>
+              )}
+            </ul>
+          </div>
+
+          {/* Right: Theme Toggle + Mobile Hamburger + Desktop Dropdown */}
+          <div className="flex items-center gap-2 lg:gap-4">
+            {/* Theme Toggle */}
+            <label className="swap swap-rotate cursor-pointer mr-2">
+              <input
+                type="checkbox"
+                checked={theme === "dark"}
+                onChange={toggleTheme}
+              />
+              <BsSun
+                className={`swap-off text-xl ${
+                  theme === "dark" ? "text-orange-400" : "text-[#f74526]"
+                }`}
+              />
+              <BsMoon
+                className={`swap-on text-xl ${
+                  theme === "dark" ? "text-orange-400" : "text-[#f74526]"
+                }`}
+              />
+            </label>
+
+            {/* Mobile Dropdown */}
+            <div className="dropdown dropdown-end lg:hidden">
+              <div tabIndex={0} role="button" className="btn btn-ghost">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  className="h-5 w-5"
+                  className="h-6 w-6"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -75,221 +110,116 @@ const Navbar = () => {
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="2"
-                    d="M4 6h16M4 12h8m-8 6h16"
+                    d="M4 6h16M4 12h16M4 18h16"
                   />
                 </svg>
               </div>
+
+              {/* Dropdown Menu */}
               <ul
                 tabIndex={0}
-                className="menu menu-sm dropdown-content bg-base-100 rounded-box z-10 mt-3 w-52 p-2 shadow"
+                className="menu menu-sm dropdown-content bg-base-100 rounded-box mt-3 w-56 shadow z-10"
               >
-                <NavLink to="/">Home</NavLink>
-                <NavLink to="/allFoods">All Foods</NavLink>
-                <NavLink to="/gallery">Gallery</NavLink>
+                {/* Profile Section at Top */}
+                {user && (
+                  <div className="flex flex-col items-center border-b border-gray-200 dark:border-gray-700 pb-3 mb-2">
+                    <img
+                      src={user.photoURL}
+                      alt="Profile"
+                      className="w-12 h-12 rounded-full mb-1"
+                    />
+                    <span className="font-semibold text-gray-800 dark:text-gray-100">
+                      {user.displayName || "User"}
+                    </span>
+                  </div>
+                )}
+
+                {/* Navigation Links */}
+                <NavLink className='font-bold' to="/">Home</NavLink>
+                <NavLink className='font-bold'  to="/allFoods">All Foods</NavLink>
+                <NavLink className='font-bold'  to="/gallery">Gallery</NavLink>
+
                 {user && (
                   <>
-                    <NavLink to="/myFood">My Foods</NavLink>
-                    <NavLink to="/addFood">Add Food</NavLink>
-                    <NavLink to="/myOrders">My Orders</NavLink>
+                    <NavLink className='font-bold'  to="/myFood">My Foods</NavLink>
+                    <NavLink className='font-bold'  to="/addFood">Add Food</NavLink>
+                    
+                    <NavLink className='font-bold'  to="/dashboard">User Dashboard</NavLink>
                   </>
                 )}
-              </ul>
-            </div>
-            {/* logo + name */}
-            <div className="flex lg:gap-2 items-center -ml-4">
-              <img
-                src={logo}
-                alt="Logo"
-                className="w-10 h-10 lg:w-12 lg:h-12 rounded-full"
-              />
-              <div className={`font-bold text-xl md:text-2xl lg:text-3xl`}>
-                <p className="logo font-extrabold great-vibes">
-                  Taste<span className={`${headingColor}`}>Hub</span>
-                </p>
-              </div>
-            </div>
-          </div>
 
-          {/* Navbar Center */}
-          <div className="navbar-center hidden lg:flex">
-            <ul className="menu menu-horizontal px-1">
-              <div className="flex gap-8">
-                <NavLink to="/">Home</NavLink>
-                <NavLink to="/allFoods">All Foods</NavLink>
-                <NavLink to="/gallery">Gallery</NavLink>
-                {user && (
-                  <>
-                    <NavLink to="/myFood">My Foods</NavLink>
-                    <NavLink to="/addFood">Add Food</NavLink>
-                    <NavLink to="/myOrders">My Orders</NavLink>
-                  </>
-                )}
-              </div>
-            </ul>
-          </div>
-
-          {/* Navbar End */}
-          <div className="navbar-end flex gap-4 ml-6">
-            {user ? (
-              <div
-                className="flex gap-1 lg:gap-3 items-center -mr-8 lg:mr-0 ml-6 lg:ml-0 relative"
-                ref={dropdownRef}
-              >
-                {/* Theme Toggle */}
-                <label className="swap swap-rotate cursor-pointer">
-                  <input
-                    type="checkbox"
-                    className="theme-controller"
-                    checked={theme === "dark"}
-                    onChange={toggleTheme}
-                    value="dark"
-                  />
-                  {/* Sun Icon */}
-                  <svg
-                    className={`swap-off h-10 w-10 fill-current ${
-                      theme === "dark" ? "text-orange-400" : "text-[#f74526]"
-                    }`}
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                  >
-                    <path d="M5.64,17l-.71.71a1,1,0,0,0,0,1.41,1,1,0,0,0,1.41,0l.71-.71A1,1,0,0,0,5.64,17ZM5,12a1,1,0,0,0-1-1H3a1,1,0,0,0,0,2H4A1,1,0,0,0,5,12Zm7-7a1,1,0,0,0,1-1V3a1,1,0,0,0-2,0V4A1,1,0,0,0,12,5ZM5.64,7.05a1,1,0,0,0,.7.29,1,1,0,0,0,.71-.29,1,1,0,0,0,0-1.41l-.71-.71A1,1,0,0,0,4.93,6.34Zm12,.29a1,1,0,0,0,.7-.29l.71-.71a1,1,0,1,0-1.41-1.41L17,5.64a1,1,0,0,0,0,1.41A1,1,0,0,0,17.66,7.34ZM21,11H20a1,1,0,0,0,0,2h1a1,1,0,0,0,0-2Zm-9,8a1,1,0,0,0-1,1v1a1,1,0,0,0,2,0V20A1,1,0,0,0,12,19ZM18.36,17A1,1,0,0,0,17,18.36l.71.71a1,1,0,0,0,1.41,0,1,1,0,0,0,0-1.41ZM12,6.5A5.5,5.5,0,1,0,17.5,12,5.51,5.51,0,0,0,12,6.5Zm0,9A3.5,3.5,0,1,1,15.5,12,3.5,3.5,0,0,1,12,15.5Z" />
-                  </svg>
-
-                  {/* Moon Icon */}
-                  <svg
-                    className={`swap-on h-10 w-10 fill-current ${
-                      theme === "dark" ? "text-orange-400" : "text-[#f74526]"
-                    }`}
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                  >
-                    <path d="M21.64,13a1,1,0,0,0-1.05-.14,8.05,8.05,0,0,1-3.37.73A8.15,8.15,0,0,1,9.08,5.49a8.59,8.59,0,0,1,.25-2A1,1,0,0,0,8,2.36,10.14,10.14,0,1,0,22,14.05,1,1,0,0,0,21.64,13Zm-9.5,6.69A8.14,8.14,0,0,1,7.08,5.22v.27A10.15,10.15,0,0,0,17.22,15.63a9.79,9.79,0,0,0,2.1-.22A8.11,8.11,0,0,1,12.14,19.73Z" />
-                  </svg>
-                </label>
-
-                {/* User Image (click toggles dropdown) */}
-                <img
-                  src={user?.photoURL}
-                  alt="User Avatar"
-                  className="w-8 h-8 lg:w-12 lg:h-12 rounded-full cursor-pointer"
-                  onClick={() => setDropdownOpen(!dropdownOpen)}
-                  title="Click to toggle profile menu"
-                />
-
-                {/* Dropdown menu */}
-                {/* Dropdown menu */}
-                {dropdownOpen && (
-                  <div className="absolute right-0 mt-40 w-56 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 z-50 p-4">
-                    {/* Close Icon */}
-                    <button
-                      onClick={() => setDropdownOpen(false)}
-                      className="absolute top-2 right-2 text-gray-500 hover:text-gray-700 dark:hover:text-gray-300"
-                      aria-label="Close profile menu"
-                    >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="h-5 w-5"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M6 18L18 6M6 6l12 12"
-                        />
-                      </svg>
-                    </button>
-
-                    <div className="flex flex-col items-center gap-2 mb-4">
-                      <img
-                        src={user?.photoURL}
-                        alt="User Avatar"
-                        className="w-16 h-16 rounded-full"
-                      />
-                      <p className="font-semibold text-gray-900 dark:text-gray-100">
-                        {user?.displayName || "No Name"}
-                      </p>
-                      <p className="text-sm text-gray-600 dark:text-gray-300">
-                        {user?.email}
-                      </p>
-                    </div>
+                {/* Auth Buttons */}
+                <div className="mt-3 border-t border-gray-200 dark:border-gray-700 pt-2 flex flex-col gap-2">
+                  {user ? (
                     <button
                       onClick={handleLogOut}
-                      className={`btn btn-outline w-full ${btnTextColor} ${btnHoverBg} hover:text-white`}
+                      className="btn btn-sm bg-red-500 text-white hover:bg-red-600"
                     >
                       Logout
                     </button>
+                  ) : (
+                    <>
+                      <button
+                        onClick={handleLogin}
+                        className={`btn btn-sm btn-outline ${btnTextColor} ${btnHoverBg} hover:text-white`}
+                      >
+                        Login
+                      </button>
+                      <button
+                        onClick={handleRegister}
+                        className={`btn btn-sm btn-outline ${btnTextColor} ${btnHoverBg} hover:text-white`}
+                      >
+                        Sign Up
+                      </button>
+                    </>
+                  )}
+                </div>
+              </ul>
+            </div>
+
+            {/* Desktop Profile Dropdown */}
+            {user && (
+              <div
+                className="hidden lg:flex items-center relative"
+                ref={dropdownRef}
+              >
+                <img
+                  src={user?.photoURL}
+                  alt="User Avatar"
+                  className="w-10 h-10 lg:w-12 lg:h-12 rounded-full cursor-pointer"
+                  onClick={() => setDropdownOpen(!dropdownOpen)}
+                />
+                {dropdownOpen && (
+                  <div className="absolute right-0 top-13 py-4 mt-2 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 z-50">
+                    <div className="px-4 border-b border-gray-200 dark:border-gray-700 text-gray-900 dark:text-gray-100 font-semibold mb-2">
+                      {user?.displayName || "User"}
+                    </div>
+                    <ul className="flex flex-col">
+                      <li>
+                        <NavLink
+                          to="/dashboard"
+                          className="px-4 py-2 mb-2"
+                          onClick={() => setDropdownOpen(false)}
+                        >
+                          User Dashboard
+                        </NavLink>
+                      </li>
+                      <li>
+                        <span
+                          onClick={handleLogOut}
+                          className="px-4 py-2 text-red-500 cursor-pointer"
+                        >
+                          Logout
+                        </span>
+                      </li>
+                    </ul>
                   </div>
                 )}
-              </div>
-            ) : (
-              <div className="navbar-end flex gap-1 lg:gap-4 -mr-12 md:mr-0">
-                {/* Theme Toggle */}
-                <label className="swap swap-rotate cursor-pointer">
-                  <input
-                    type="checkbox"
-                    className="theme-controller"
-                    checked={theme === "dark"}
-                    onChange={toggleTheme}
-                    value="dark"
-                  />
-
-                  {/* Sun Icon */}
-                  <svg
-                    className={`swap-off h-10 w-10 fill-current ${
-                      theme === "dark" ? "text-orange-400" : "text-[#f74526]"
-                    }`}
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                  >
-                    <path d="M5.64,17l-.71.71a1,1,0,0,0,0,1.41,1,1,0,0,0,1.41,0l.71-.71A1,1,0,0,0,5.64,17ZM5,12a1,1,0,0,0-1-1H3a1,1,0,0,0,0,2H4A1,1,0,0,0,5,12Zm7-7a1,1,0,0,0,1-1V3a1,1,0,0,0-2,0V4A1,1,0,0,0,12,5ZM5.64,7.05a1,1,0,0,0,.7.29,1,1,0,0,0,.71-.29,1,1,0,0,0,0-1.41l-.71-.71A1,1,0,0,0,4.93,6.34Zm12,.29a1,1,0,0,0,.7-.29l.71-.71a1,1,0,1,0-1.41-1.41L17,5.64a1,1,0,0,0,0,1.41A1,1,0,0,0,17.66,7.34ZM21,11H20a1,1,0,0,0,0,2h1a1,1,0,0,0,0-2Zm-9,8a1,1,0,0,0-1,1v1a1,1,0,0,0,2,0V20A1,1,0,0,0,12,19ZM18.36,17A1,1,0,0,0,17,18.36l.71.71a1,1,0,0,0,1.41,0,1,1,0,0,0,0-1.41ZM12,6.5A5.5,5.5,0,1,0,17.5,12,5.51,5.51,0,0,0,12,6.5Zm0,9A3.5,3.5,0,1,1,15.5,12,3.5,3.5,0,0,1,12,15.5Z" />
-                  </svg>
-
-                  {/* Moon Icon */}
-                  <svg
-                    className={`swap-on h-10 w-10 fill-current ${
-                      theme === "dark" ? "text-orange-400" : "text-[#f74526]"
-                    }`}
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                  >
-                    <path d="M21.64,13a1,1,0,0,0-1.05-.14,8.05,8.05,0,0,1-3.37.73A8.15,8.15,0,0,1,9.08,5.49a8.59,8.59,0,0,1,.25-2A1,1,0,0,0,8,2.36,10.14,10.14,0,1,0,22,14.05,1,1,0,0,0,21.64,13Zm-9.5,6.69A8.14,8.14,0,0,1,7.08,5.22v.27A10.15,10.15,0,0,0,17.22,15.63a9.79,9.79,0,0,0,2.1-.22A8.11,8.11,0,0,1,12.14,19.73Z" />
-                  </svg>
-                </label>
-
-                {/* Login and Signup Buttons */}
-                <button
-                  onClick={handleLogin}
-                  className={`btn btn-xs lg:btn-sm btn-outline ${btnTextColor} ${btnHoverBg} hover:text-white`}
-                >
-                  Login
-                </button>
-                <button
-                  onClick={handleRegister}
-                  className={`btn btn-xs lg:btn-sm btn-outline ${btnTextColor} ${btnHoverBg} hover:text-white`}
-                >
-                  SignUP
-                </button>
               </div>
             )}
           </div>
         </div>
       </div>
-
-      {/* <ToastContainer
-        position="top-right"
-        autoClose={3000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="colored"
-      /> */}
     </div>
   );
 };
