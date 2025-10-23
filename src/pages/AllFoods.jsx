@@ -1,55 +1,141 @@
 import React, { useEffect, useState, useContext } from "react";
 import { Link, useLoaderData } from "react-router";
 import { ThemeContext } from "../Components/ThemeContext";
+import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
+import axios from "axios";
+import { AuthContext } from "../Components/AuthContext";
+import { toast } from "react-toastify";
 
 const AllFoods = () => {
-  let initialFoods = useLoaderData();
-  let [foods, setFoods] = useState(initialFoods);
+  const initialFoods = useLoaderData();
+  const [foods, setFoods] = useState(initialFoods);
+  const [search, setSearch] = useState("");
+  const [sortOrder, setSortOrder] = useState(""); // 'asc' or 'desc'
+  const [favoriteIds, setFavoriteIds] = useState([]);
+  const { theme } = useContext(ThemeContext);
+  const { user } = useContext(AuthContext);
 
-  let [search, setSearch] = useState("");
-  let [sortOrder, setSortOrder] = useState(""); // 'asc' or 'desc'
-
-  let { theme } = useContext(ThemeContext);
-
+  // ✅ Fetch user's favorites from MongoDB when logged in
   useEffect(() => {
-    fetch(`https://b11a11-server-side-sariakhatun.vercel.app/foods?searchParams=${search}`)
+    const fetchFavorites = async () => {
+      if (!user?.email) return;
+      try {
+        const res = await axios.get(
+          `https://b11a11-server-side-sariakhatun.vercel.app/favorites?email=${user.email}`
+        );
+        setFavoriteIds(res.data.map((fav) => fav.foodId)); // store foodId only
+      } catch (err) {
+        console.error("Error fetching favorites:", err);
+      }
+    };
+    fetchFavorites();
+  }, [user]);
+
+  // ✅ Fetch foods with search
+  useEffect(() => {
+    fetch(
+      `https://b11a11-server-side-sariakhatun.vercel.app/foods?searchParams=${search}`
+    )
       .then((res) => res.json())
-      .then((data) => {
-        setFoods(data);
-      });
+      .then((data) => setFoods(data));
   }, [search]);
 
-  // Sort foods locally whenever foods or sortOrder changes
+  // ✅ Sort foods by price
   useEffect(() => {
     if (sortOrder === "asc") {
-      setFoods((prevFoods) => [...prevFoods].sort((a, b) => a.price - b.price));
+      setFoods((prev) => [...prev].sort((a, b) => a.price - b.price));
     } else if (sortOrder === "desc") {
-      setFoods((prevFoods) => [...prevFoods].sort((a, b) => b.price - a.price));
+      setFoods((prev) => [...prev].sort((a, b) => b.price - a.price));
     }
   }, [sortOrder]);
 
-  // Define colors based on theme
-  const headingTextClass = theme === "dark" ? "text-orange-400" : "text-[#f74526]";
-  const bgGradientClass = theme === "dark" 
-    ? "bg-gradient-to-r from-gray-800 via-gray-900 to-black" 
-    : "bg-gradient-to-r from-[#f74526] to-[#ff9a8b]";
-  const cardBgClass = theme === "dark" ? "bg-gray-800 border-gray-700" : "bg-white border-[#ffd8cc]";
+  // ✅ Toggle favorite (MongoDB)
+  const toggleFavorite = async (food) => {
+    if (!user) {
+      toast.error("Please log in to add favorites!");
+      return;
+    }
+
+    if (favoriteIds.includes(food._id)) {
+      // remove favorite
+      try {
+        const res = await axios.get(
+          `https://b11a11-server-side-sariakhatun.vercel.app/favorites?email=${user.email}`
+        );
+        const favorite = res.data.find((f) => f.foodId === food._id);
+        if (favorite) {
+          await axios.delete(`https://b11a11-server-side-sariakhatun.vercel.app/favorites/${favorite._id}`);
+          setFavoriteIds(favoriteIds.filter((id) => id !== food._id));
+          toast.info("Removed from favorites!");
+        }
+      } catch (err) {
+        console.error("Error removing favorite:", err);
+        toast.error("Failed to remove favorite");
+      }
+    } else {
+      // add favorite
+      try {
+        await axios.post("https://b11a11-server-side-sariakhatun.vercel.app/favorites", {
+          foodId: food._id,
+          userEmail: user.email,
+          foodData: {
+            foodName: food.foodName,
+            price: food.price,
+            imageUrl: food.imageUrl,
+          },
+        });
+        setFavoriteIds([...favoriteIds, food._id]);
+        toast.success("Added to favorites!");
+      } catch (err) {
+        if (err.response?.status === 400) {
+          toast.info("Already in favorites!");
+        } else {
+          console.error("Error adding favorite:", err);
+          toast.error("Failed to add favorite");
+        }
+      }
+    }
+  };
+
+  // ✅ Theme-based colors
+  const headingTextClass =
+    theme === "dark" ? "text-orange-400" : "text-[#f74526]";
+  const bgGradientClass =
+    theme === "dark"
+      ? "bg-gradient-to-r from-gray-800 via-gray-900 to-black"
+      : "bg-gradient-to-r from-[#f74526] to-[#ff9a8b]";
+  const cardBgClass =
+    theme === "dark"
+      ? "bg-gray-800 border-gray-700"
+      : "bg-white border-[#ffd8cc]";
   const textPrimaryClass = theme === "dark" ? "text-white" : "text-gray-600";
-  const buttonBgClass = theme === "dark" ? "bg-orange-500 hover:bg-orange-600" : "bg-[#f74526] hover:bg-[#e43c1c]";
-  const inputBgClass = theme === "dark" ? "bg-gray-700 text-white border-gray-600 placeholder-gray-400" : "";
-  
+  const buttonBgClass =
+    theme === "dark"
+      ? "bg-orange-500 hover:bg-orange-600"
+      : "bg-[#f74526] hover:bg-[#e43c1c]";
+  const inputBgClass =
+    theme === "dark"
+      ? "bg-gray-700 text-white border-gray-600 placeholder-gray-400"
+      : "";
+
   return (
-    <div className={`min-h-screen` }>
+    <div className="min-h-screen">
       {/* Page Title Section */}
-      <div className={`${bgGradientClass} mt-24 py-20 text-center rounded-tr-4xl rounded-bl-4xl mb-4`}>
-        <h1 className={`text-4xl md:text-5xl font-bold great-vibes ${headingTextClass}`}>
+      <div
+        className={`${bgGradientClass} mt-24 py-20 text-center rounded-tr-4xl rounded-bl-4xl mb-4`}
+      >
+        <h1
+          className={`text-4xl md:text-5xl font-bold great-vibes ${headingTextClass}`}
+        >
           All Delicious Foods
         </h1>
       </div>
 
       {/* Search and Sort */}
       <div className="flex items-center justify-center gap-4 px-4 md:px-0">
-        <label className={`input mt-4 flex items-center border rounded px-2 ${inputBgClass}`}>
+        <label
+          className={`input mt-4 flex items-center border rounded px-2 ${inputBgClass}`}
+        >
           <svg
             className="h-5 w-5 opacity-50 mr-2"
             xmlns="http://www.w3.org/2000/svg"
@@ -99,12 +185,12 @@ const AllFoods = () => {
               <h2 className={`text-xl font-semibold ${headingTextClass}`}>
                 {food.foodName}
               </h2>
-              <p className={`${textPrimaryClass}`}>Category: {food.category}</p>
-              <p className={`${textPrimaryClass}`}>Price: ${food.price}</p>
-              <p className={`${textPrimaryClass}`}>
+              <p className={textPrimaryClass}>Category: {food.category}</p>
+              <p className={textPrimaryClass}>Price: ${food.price}</p>
+              <p className={textPrimaryClass}>
                 Available Quantity: {food.quantity}
               </p>
-              <div className="text-right mt-4">
+              <div className="text-right flex items-center mt-4">
                 <Link to={`/singleFood/${food._id}`}>
                   <button
                     className={`${buttonBgClass} text-white px-4 py-2 rounded`}
@@ -112,6 +198,16 @@ const AllFoods = () => {
                     Details
                   </button>
                 </Link>
+                <button
+                  onClick={() => toggleFavorite(food)}
+                  className="ml-2 text-2xl transition-colors duration-200"
+                >
+                  {favoriteIds.includes(food._id) ? (
+                    <AiFillHeart size={22} className="text-red-500" />
+                  ) : (
+                    <AiOutlineHeart className="text-gray-400 hover:text-red-500" />
+                  )}
+                </button>
               </div>
             </div>
           </div>

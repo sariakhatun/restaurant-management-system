@@ -19,6 +19,7 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
 import Dashboard from "../pages/Dashboard";
 import Profile from "../pages/Profile";
 import Settings from "../pages/Settings";
+import Favorites from "../pages/Favorites";
 
 const router = createBrowserRouter([
   {
@@ -44,6 +45,14 @@ const router = createBrowserRouter([
             element: (
               <PrivateRoute>
                 <MyOrders></MyOrders>
+              </PrivateRoute>
+            ),
+          },
+          {
+            path: "favorites",
+            element: (
+              <PrivateRoute>
+                <Favorites></Favorites>
               </PrivateRoute>
             ),
           },
